@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html 
+	lang="zh-CN">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		
+<link rel="stylesheet" href="/css/layout.css">
+
+		
+		<title> 洛谷部分代码展示 -  kalipolis的个人网站</title>
+		<link rel="stylesheet" href="https://unpkg.com/mdui@1.0.2/dist/css/mdui.min.css" />
+		<script src="https://unpkg.com/mdui@1.0.2/dist/js/mdui.min.js"></script>
+		<!-- lazyload -->
+		<script src="https://unpkg.com/lazysizes@5.1.0/lazysizes.min.js"></script>
+		<!-- smooth-scrolling -->
+		<script src="https://unpkg.com/smooth-scrolling.js@1.0.0"></script>
+		<!-- highlight -->
+		<link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.6.0/styles/atom-one-dark.min.css" />
+		<script src="//unpkg.com/@highlightjs/cdn-assets@11.6.0/highlight.min.js"></script>
+		<!-- 预置 kiraicon -->
+		
+<link rel="stylesheet" href="/lib/iconfont/iconfont.css">
+
+		
+		<link
+			rel="shortcut icon"
+			href="/favicon.png"
+			type="image/png"
+		/>
+		
+<link rel="stylesheet" href="/deps/css/APlayer.min.css">
+
+		
+			
+				
+<link rel="stylesheet" href="/style.css">
+
+			
+				
+<link rel="stylesheet" href="/custom.css">
+
+			
+		
+		
+<script src="/deps/js/APlayer.min.js"></script>
+<script src="/deps/js/Meting.min.js"></script>
+
+	<meta name="generator" content="Hexo 6.3.0"></head>
+
+	<body>
+		<div
+			class="kira-background"
+			style="background-image: url('/tagagison.jpg')"
+		></div>
+		<div class="kira-header">
+    <a
+        class="kira-drawer-button mdui-ripple"
+        title="导航栏"
+        onclick="document.querySelector('.kira-sidebar-modal').classList.add('show');document.querySelector('.kira-sidebar#sidebar').classList.add('show');"
+    >
+        <i class="kirafont icon-menu"></i>
+    </a>
+    <a href="/" title="kalipolis的个人网站">
+        <img
+			src="/favicon.jpg"
+			alt="kalipolis"
+		/>
+    </a>
+</div>
+		<div class="kira-body">
+			<div class="kira-sidebar" id="sidebar">
+	<div class="kira-avatar mdui-ripple">
+		<a href="/favicon.jpg" title="kalipolis">
+			<img
+				src="/favicon.jpg"
+				alt="kalipolis"
+			/>
+		</a>
+	</div>
+	<div class="kira-count">
+		<div><span>文章</span>7</div>
+		<div><span>标签</span>6</div>
+		<div><span>分类</span>4</div>
+	</div>
+	<div class="kira-list">
+		
+		<a
+			class="kira-list-item mdui-ripple false"
+			href="/"
+			title="回到首页"
+		>
+			<i
+				class="kirafont
+					
+						icon-home
+					"
+			></i>
+			<div class="kira-list-item-content">
+				回到首页
+			</div>
+		</a>
+		
+		<a
+			class="kira-list-item mdui-ripple false"
+			href="/about.html"
+			title="关于本人"
+		>
+			<i
+				class="kirafont
+					
+						icon-user
+					"
+			></i>
+			<div class="kira-list-item-content">
+				关于本人
+			</div>
+		</a>
+		
+		<a
+			class="kira-list-item mdui-ripple false"
+			href="/archive.html"
+			title="文章归档"
+		>
+			<i
+				class="kirafont
+					
+						icon-container
+					"
+			></i>
+			<div class="kira-list-item-content">
+				文章归档
+			</div>
+		</a>
+		
+		<a
+			class="kira-list-item mdui-ripple false"
+			href="/friends.html"
+			title="朋友的个人网站"
+		>
+			<i
+				class="kirafont
+					
+						icon-team
+					"
+			></i>
+			<div class="kira-list-item-content">
+				朋友的个人网站
+			</div>
+		</a>
+		
+	</div>
+	<aside id="kira-sidebar">
+		
+			<div class="kira-widget-wrap">
+	<div class="kira-widget kira-social">
+		
+			<a
+				class="mdui-ripple"
+				href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=1753573997&website=www.oicqzone.com"
+				target="_blank"
+				mdui-tooltip="{content: 'QQ'}"
+				style="color: rgb(49, 174, 255); background-color: rgba(49, 174, 255, .1);"
+			>
+				<i
+					class="kirafont
+					
+						icon-QQ
+					"
+				></i>
+			</a>
+		
+			<a
+				class="mdui-ripple"
+				href="https://space.bilibili.com/384132756"
+				target="_blank"
+				mdui-tooltip="{content: '哔哩哔哩'}"
+				style="color: rgb(231, 106, 141); background-color: rgba(231, 106, 141, .15);"
+			>
+				<i
+					class="kirafont
+					
+						icon-bilibili
+					"
+				></i>
+			</a>
+		
+			<a
+				class="mdui-ripple"
+				href="https://github.com/kalipolis/"
+				target="_blank"
+				mdui-tooltip="{content: 'GitHub'}"
+				style="color: rgb(25, 23, 23); background-color: rgba(25, 23, 23, .15);"
+			>
+				<i
+					class="kirafont
+					
+						icon-github
+					"
+				></i>
+			</a>
+		
+			<a
+				class="mdui-ripple"
+				href="https://gitee.com/kalipolis/"
+				target="_blank"
+				mdui-tooltip="{content: 'Gitee'}"
+				style="color: rgb(165, 15, 15); background-color: rgba(165, 15, 15, .15);"
+			>
+				<i
+					class="kirafont
+					
+						icon-gitee
+					"
+				></i>
+			</a>
+		
+	</div>
+</div>
+
+		
+			
+  <div class="kira-widget-wrap">
+    <h3 class="kira-widget-title">分类</h3>
+    <div class="kira-widget">
+      <ul class="category-list">
+        
+        
+
+        
+          <li class="category-list-item">
+            <a class="category-list-link" href="/categories/关于本项目/">
+              关于本项目
+            </a>
+            <span class="category-list-count">1</span>
+          </li>
+        
+          <li class="category-list-item">
+            <a class="category-list-link" href="/categories/分享/">
+              分享
+            </a>
+            <span class="category-list-count">1</span>
+          </li>
+        
+          <li class="category-list-item">
+            <a class="category-list-link" href="/categories/技术/">
+              技术
+            </a>
+            <span class="category-list-count">4</span>
+          </li>
+        
+          <li class="category-list-item">
+            <a class="category-list-link" href="/categories/番剧/">
+              番剧
+            </a>
+            <span class="category-list-count">1</span>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+		
+			
+	<div class="kira-widget-wrap">
+		<div id="randomtagcloud" class="kira-widget tagcloud kira-rainbow">
+			<a href="/tags/blog/" style="font-size: 20px;">blog</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/c/" style="font-size: 10px;">c++</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/python/" style="font-size: 10px;">python</a>
+		</div>
+		
+	</div>
+
+
+		
+	</aside>
+	<div class="kira-copyright">
+		&copy; 2023
+		<a href="/">kalipolis</a>
+		Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> &
+		<a href="https://github.com/ch1ny/kira-hexo/" target="_blank">Kira-Hexo</a>
+		<br />
+		
+		
+	</div>
+</div>
+<div
+	class="kira-sidebar-modal"
+	id="sidebar-modal"
+	onclick="(function(self) {
+		self.classList.remove('show');
+		document.querySelector('.kira-sidebar.show#sidebar').classList.remove('show');
+	})(this)"
+></div>
+			<div class="kira-content">
+				<div id="kira-top-header"></div>
+				<div class="kira-main-content">
+					
+<link rel="stylesheet" href="/css/kira-image.css">
+
+
+<script src="/js/kira-image.js"></script>
+
+<div class="kira-image">
+    <div class="kira-image-modal">
+        <div class="kira-image-header">
+            <div class="kira-image-counter"></div>
+            <div class="kira-image-title"></div>
+            <div class="kira-image-operation">
+                <div class="kira-image-operation-button" id="kira-image-operation-button-zoom">
+                    <i class="kirafont icon-zoom-in"></i>
+                </div>
+                <div class="kira-image-operation-button" id="kira-image-operation-button-close">
+                    <i class="kirafont icon-close"></i>
+                </div>
+            </div>
+        </div>
+        <div class="kira-image-container">
+            <div class="kira-image-prev-button-panel">
+                <div class="kira-image-exchange-button">
+                    <i class="kirafont icon-left"></i>
+                </div>
+            </div>
+            <div class="kira-image-list">
+                <div class="kira-image-prev">
+                    <img />
+                </div>
+                <div class="kira-image-now">
+                    <img />
+                </div>
+                <div class="kira-image-next">
+                    <img />
+                </div>
+            </div>
+            <div class="kira-image-next-button-panel">
+                <div class="kira-image-exchange-button">
+                    <i class="kirafont icon-right"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="kira-post">
+	<article>
+		
+		<div class="kira-post-cover">
+			<img
+				data-src="/img/Matikane Tannhauser.jpg"
+				data-sizes="auto"
+				alt="洛谷部分代码展示"
+				class="lazyload kira-post-cover-image disabled-kira-image"
+			/>
+			<h1>洛谷部分代码展示</h1>
+		</div>
+		
+		<div class="kira-post-meta kira-rainbow" style="margin:10px 0!important;">
+			<a><i class="kirafont icon-calendar-fill"></i>2023年09月13日</a>
+			<a><i class="kirafont icon-edit-fill"></i>4.3k 字</a>
+			<a><i class="kirafont icon-time-circle-fill"></i>大概 21 分钟</a>
+		</div>
+		<ul>
+<li>集合了我洛谷不看题解通过部分题目的代码<del>我的实力也就这样了</del>，贴心写了较为详细的中文注释，供各位学习思路</li>
+<li>我的洛谷账号（现在基本不用了）：<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/user/611273">点此跳转</a></li>
+<li>由于我在hexo<strong>没有找到可用的插件</strong>对latex公式的支持，下方的变量<strong>显示会有问题</strong>，如果对公式有疑问，建议点击题目链接跳转阅读</li>
+<li><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P1450">P1450 [HAOI2008] 硬币购物</a></li>
+</ul>
+<h1><span id="haoi2008-硬币购物">[HAOI2008] 硬币购物</span></h1><h2><span id="题目描述">题目描述</span></h2><p>共有 $4$ 种硬币。面值分别为 $c_1,c_2,c_3,c_4$。</p>
+<p>某人去商店买东西，去了 $n$ 次，对于每次购买，他带了 $d_i$ 枚 $i$ 种硬币，想购买 $s$ 的价值的东西。请问每次有多少种付款方法。</p>
+<h2><span id="输入格式">输入格式</span></h2><p>输入的第一行是五个整数，分别代表 $c_1,c_2,c_3,c_4, n$。</p>
+<p>接下来 $n$ 行，每行有五个整数，描述一次购买，分别代表 $d_1, d_2, d_3, d_4,s$。</p>
+<h2><span id="输出格式">输出格式</span></h2><p>对于每次购买，输出一行一个整数代表答案。</p>
+<h2><span id="样例-1">样例 #1</span></h2><h3><span id="样例输入-1">样例输入 #1</span></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">1 2 5 10 2<br>3 2 3 1 10<br>1000 2 2 2 900<br></code></pre></td></tr></table></figure>
+
+<h3><span id="样例输出-1">样例输出 #1</span></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">4<br>27<br></code></pre></td></tr></table></figure>
+
+<h2><span id="提示">提示</span></h2><h4><span id="数据规模与约定">数据规模与约定</span></h4><ul>
+<li>对于 $100%$ 的数据，保证 $1 \leq c_i, d_i, s \leq 10^5$，$1 \leq n \leq 1000$。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">#include&lt;bits/stdc++.h&gt;<br>using namespace std;<br><br>int c[5]; // 硬币面值<br>int d[5]; // 每种硬币数量<br>long long ans[100000+10]; // 动态规划数组<br><br>long long ff(int a)&#123;<br>	if(a&lt;0)<br>		return 0;<br>	else<br>		return ans[a];<br>&#125;<br><br>int main() &#123;<br>	int n;<br>	cin&gt;&gt;c[1]&gt;&gt;c[2]&gt;&gt;c[3]&gt;&gt;c[4]&gt;&gt;n; // 输入硬币面值和购买次数<br><br>	for(int i=1;i&lt;=n;i++)&#123;<br>		int goal;<br>		cin&gt;&gt;d[1]&gt;&gt;d[2]&gt;&gt;d[3]&gt;&gt;d[4]&gt;&gt;goal; // 输入每次购买的硬币数量和目标价值<br><br>		memset(ans,0,sizeof(ans)); // 初始化动态规划数组<br>		ans[0]=1; // 初始值<br><br>		// 动态规划计算付款方法<br>		for(int j=1;j&lt;=4;j++)&#123;<br>			for(int s=0;s&lt;=goal-c[j];s++)&#123;<br>				ans[s+c[j]]+=ans[s];<br>			&#125;	<br>		&#125;<br><br>		// 计算不同付款方式的数量<br>		long long g[5];<br>		for(int j=1;j&lt;=4;j++)&#123;<br>			g[j]=(long long)(d[j]+1)*c[j];<br>		&#125;<br>		long long da[6];<br>		da[1]=ff(goal);<br>		da[2]=ff(goal-g[1])+ff(goal-g[2])+ff(goal-g[3])+ff(goal-g[4]);<br>		da[3]=ff(goal-g[1]-g[2])+ff(goal-g[1]-g[3])+ff(goal-g[1]-g[4])+ff(goal-g[2]-g[3])+ff(goal-g[2]-g[4])+ff(goal-g[3]-g[4]);<br>		da[4]=ff(goal-g[1]-g[2]-g[3])+ff(goal-g[1]-g[4]-g[3])+ff(goal-g[1]-g[2]-g[4])+ff(goal-g[4]-g[2]-g[3]);<br>		da[5]=ff(goal-g[1]-g[2]-g[3]-g[4]);<br><br>		cout&lt;&lt;da[1]-da[2]+da[3]-da[4]+da[5]&lt;&lt;endl; // 输出答案<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P2024">P2024 [NOI2001] 食物链</a></li>
+</ul>
+<h1><span id="noi2001-食物链">[NOI2001] 食物链</span></h1><h2><span id="题目描述">题目描述</span></h2><p>动物王国中有三类动物 $A,B,C$，这三类动物的食物链构成了有趣的环形。$A$ 吃 $B$，$B$ 吃 $C$，$C$ 吃 $A$。</p>
+<p>现有 $N$ 个动物，以 $1 \sim N$ 编号。每个动物都是 $A,B,C$ 中的一种，但是我们并不知道它到底是哪一种。</p>
+<p>有人用两种说法对这 $N$ 个动物所构成的食物链关系进行描述：</p>
+<ul>
+<li>第一种说法是 <code>1 X Y</code>，表示 $X$ 和 $Y$ 是同类。</li>
+<li>第二种说法是 <code>2 X Y</code>，表示 $X$ 吃 $Y$。</li>
+</ul>
+<p>此人对 $N$ 个动物，用上述两种说法，一句接一句地说出 $K$ 句话，这 $K$ 句话有的是真的，有的是假的。当一句话满足下列三条之一时，这句话就是假话，否则就是真话。</p>
+<ul>
+<li>当前的话与前面的某些真的话冲突，就是假话；</li>
+<li>当前的话中 $X$ 或 $Y$ 比 $N$ 大，就是假话；</li>
+<li>当前的话表示 $X$ 吃 $X$，就是假话。</li>
+</ul>
+<p>你的任务是根据给定的 $N$ 和 $K$ 句话，输出假话的总数。</p>
+<h2><span id="输入格式">输入格式</span></h2><p>第一行两个整数，$N,K$，表示有 $N$ 个动物，$K$ 句话。</p>
+<p>第二行开始每行一句话（按照题目要求，见样例）</p>
+<h2><span id="输出格式">输出格式</span></h2><p>一行，一个整数，表示假话的总数。</p>
+<h2><span id="样例-1">样例 #1</span></h2><h3><span id="样例输入-1">样例输入 #1</span></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">100 7<br>1 101 1<br>2 1 2<br>2 2 3<br>2 3 3<br>1 1 3<br>2 3 1<br>1 5 5<br></code></pre></td></tr></table></figure>
+
+<h3><span id="样例输出-1">样例输出 #1</span></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">3<br></code></pre></td></tr></table></figure>
+
+<h2><span id="提示">提示</span></h2><p>对于全部数据，$1\le N\le 5 \times 10^4$，$1\le K \le 10^5$。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">#include&lt;bits/stdc++.h&gt;<br>using namespace std;<br>typedef long long ll;<br>#define N 50000<br><br>int bing[150000+1]; // 用于记录食物链关系<br><br>// 查找操作，返回节点的根节点<br>int find(int a)&#123;<br>	if(bing[a]==a)<br>		return a;<br>	else<br>		return find(bing[a]);<br>&#125;<br><br>// 合并操作，将两个节点所在的集合合并<br>void hebing(int a,int b)&#123;<br>	int x=find(a),y=find(b);<br>	bing[x]=y;<br>&#125;<br><br>int main() &#123;<br>	for(int i=1;i&lt;=150001;i++)&#123;<br>		bing[i]=i;<br>	&#125;<br><br>	int n,k;<br>	cin&gt;&gt;n&gt;&gt;k; // 输入动物数量和句子数量<br><br>	int a,b,c;<br>	int ans=0;<br><br>	for(int i=1;i&lt;=k;i++)&#123;<br>		cin&gt;&gt;a&gt;&gt;b&gt;&gt;c; // 输入每句话的描述<br><br>		if(b&gt;n||c&gt;n)&#123;<br>			ans++;<br>			continue;<br>		&#125;<br><br>		if(a==1)&#123; // 第一种说法：X和Y是同类<br>			if(find(b+N)==find(c)||find(b+2*N)==find(c))&#123;<br>				ans++; // 与前面的真话冲突，为假话<br>				continue;<br>			&#125;<br>			else &#123;<br>				hebing(b,c); // 合并同类关系<br>				hebing(b+N,c+N);<br>				hebing(b+2*N,c+2*N);<br>			&#125;<br>		&#125;<br>		if(a==2)&#123; // 第二种说法：X吃Y<br>			if(b==c)&#123;<br>				ans++; // X吃X，为假话<br>				continue;<br>			&#125;<br>			if(find(b)==find(c)||find(b)==find(c+2*N))&#123;<br>				ans++; // 与前面的真话冲突，为假话<br>				continue;<br>			&#125;<br>			else&#123;<br>				hebing(b,c+N); // 建立吃食关系<br>				hebing(b+N,c+2*N);<br>				hebing(b+2*N,c);<br>			&#125;<br>		&#125;<br>	&#125;<br><br>	cout&lt;&lt;ans; // 输出假话数量<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P2148">P2148 [SDOI2009] E&amp;D</a></li>
+</ul>
+<h1><span id="sdoi2009-eampd">[SDOI2009] E&amp;D</span></h1><h2><span id="题目描述">题目描述</span></h2><p>小 E 与小 W 进行一项名为 <code>E&amp;D</code> 游戏。</p>
+<p>游戏的规则如下：桌子上有 $2n$ 堆石子，编号为 $1 \sim 2n$。其中，为了方便起见，我们将第 $2k-1$ 堆与第 $2k$ 堆（$1 \le k \le n$）视为同一组。第 $i$ 堆的石子个数用一个正整数 $S_i$ 表示。</p>
+<p>一次分割操作指的是，从桌子上任取一堆石子，将其移走。然后分割它同一组的另一堆石子，从中取出若干个石子放在被移走的位置，组成新的一堆。操作完成后，所有堆的石子数必须保证大于 $0$。显然，被分割的一堆的石子数至少要为 $2$。两个人轮流进行分割操作。如果轮到某人进行操作时，所有堆的石子数均为 $1$，则此时没有石子可以操作，判此人输掉比赛。</p>
+<p>小 E 进行第一次分割。他想知道，是否存在某种策略使得他一定能战胜小 W。因此，他求助于小 F，也就是你，请你告诉他是否存在必胜策略。例如，假设初始时桌子上有 $4$ 堆石子，数量分别为 $1,2,3,1$。小 E 可以选择移走第 $1$ 堆，然后将第 $2$ 堆分割（只能分出 $1$ 个石子）。接下来，小 W 只能选择移走第 $4$ 堆，然后将第 $3$ 堆分割为 $1$ 和 $2$。最后轮到小 E，他只能移走后两堆中数量为 $1$ 的一堆，将另一堆分割为 $1$ 和 $1$。这样，轮到小 W 时，所有堆的数量均为 $1$，则他输掉了比赛。故小 E 存在必胜策略。</p>
+<h2><span id="输入格式">输入格式</span></h2><p><strong>本题有多组数据。</strong></p>
+<p>第一行一个整数 $T$，表示数据组数。</p>
+<p>对于每组数据：</p>
+<p>第一行一个整数 $N$，表示桌子上共有 $N$ 堆石子，这里的 $N$ 即为题目描述中的 $2n$。</p>
+<p>第二行 $N$ 个整数 $S_{1 \dots N}$。</p>
+<h2><span id="输出格式">输出格式</span></h2><p>对于每组数据，如果小 E 必胜，则一行一个字符串 <code>YES</code>，否则一行一个字符串 <code>NO</code>。</p>
+<h2><span id="样例-1">样例 #1</span></h2><h3><span id="样例输入-1">样例输入 #1</span></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">2<br>4<br>1 2 3 1<br>6<br>1 1 1 1 1 1<br></code></pre></td></tr></table></figure>
+
+<h3><span id="样例输出-1">样例输出 #1</span></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">YES<br>NO<br></code></pre></td></tr></table></figure>
+
+<h2><span id="提示">提示</span></h2><p>对于 $20%$ 的数据，$N&#x3D;2$。</p>
+<p>对于另外 $20%$ 的数据，$N \le 4$，$S_i \le 50$。</p>
+<p>对于 $100%$ 的数据，$1 \le T \le 20$，$1 \le N \le 2 \times 10^4$ 且 $N$ 为偶数，$1 \le S_i \le 2 \times 10^9$。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">#include&lt;bits/stdc++.h&gt;<br>using namespace std;<br><br>// 递归函数，计算必胜策略的情况<br>long long gui(long long a, long long b) &#123;<br>	if (a % 2 == 1 &amp;&amp; b % 2 == 1)<br>		return 0; // 如果两堆石子数都是奇数，返回0，表示无法必胜<br>	if (a % 2 == 0 &amp;&amp; b % 2 == 0) &#123;<br>		return gui(a / 2, b / 2) + 1; // 如果两堆石子数都是偶数，递归调用gui函数，并加1<br>	&#125;<br>	else &#123;<br>		if (a % 2 == 1) &#123;<br>			return gui(a + 1, b); // 如果第一堆石子数是奇数，将其加1，继续递归调用gui函数<br>		&#125;<br>		else &#123;<br>			return gui(a, b + 1); // 如果第二堆石子数是奇数，将其加1，继续递归调用gui函数<br>		&#125;<br>	&#125;<br>&#125;<br><br>int main() &#123;<br>	int t;<br>	cin &gt;&gt; t; // 输入游戏的轮数<br><br>	for (int i = 1; i &lt;= t; i++) &#123;<br>		long long n, g, h, ans = 0;<br>		cin &gt;&gt; n; // 输入石子堆的数量<br><br>		// 遍历每一组石子堆<br>		for (int j = 1; j &lt;= n / 2; j++) &#123;<br>			cin &gt;&gt; g &gt;&gt; h; // 输入每组石子堆的石子数量<br>			ans = (ans ^ gui(g, h)); // 异或运算，计算所有组的结果<br>		&#125;<br><br>		if (ans == 0)<br>			cout &lt;&lt; &quot;NO&quot; &lt;&lt; endl; // 如果结果为0，表示无法必胜<br>		else<br>			cout &lt;&lt; &quot;YES&quot; &lt;&lt; endl; // 如果结果不为0，表示存在必胜策略<br>	&#125;<br>	return 0;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P5851">P5851 [USACO19DEC] Greedy Pie Eaters P</a></li>
+</ul>
+<h1><span id="usaco19dec-greedy-pie-eaters-p">[USACO19DEC] Greedy Pie Eaters P</span></h1><h2><span id="题目背景">题目背景</span></h2><p>Farmer John has $M$ cows, conveniently labeled $1 \ldots M$, who enjoy the occasional change of pace<br>from eating grass.  As a treat for the cows, Farmer John has baked $N$ pies ($1 \leq N \leq 300$), labeled<br>$1 \ldots N$.  Cow $i$ enjoys pies with labels in the range $[l_i, r_i]$ (from $l_i$ to $r_i$ inclusive),<br>and no two cows enjoy the exact same range of pies.  Cow $i$ also has a weight, $w_i$, which<br>is an integer in the range $1 \ldots 10^6$.</p>
+<p>Farmer John may choose a sequence of cows $c_1,c_2,\ldots, c_K,$ after which the<br>selected cows will take turns eating in that order. Unfortunately, the cows<br>don’t know how to share! When it is cow $c_i$’s turn to eat, she will consume<br>all of the  pies that she enjoys — that is, all remaining pies in the interval<br>$[l_{c_i},r_{c_i}]$.  Farmer John would like to avoid the awkward situation<br>occurring when it is a cows turn to eat but all of the pies she enjoys have already been<br>consumed. Therefore, he wants you to compute the largest possible total weight<br>($w_{c_1}+w_{c_2}+\ldots+w_{c_K}$) of a sequence $c_1,c_2,\ldots, c_K$ for which each cow in the<br>sequence eats at least one pie.</p>
+<h2><span id="题目描述">题目描述</span></h2><p>Farmer John 有 $M$ 头奶牛，为了方便，编号为 $1,\dots,M$。这些奶牛平时都吃青草，但是喜欢偶尔换换口味。Farmer John 一天烤了 $N$ 个派请奶牛吃，这 $N$ 个派编号为 $1,\dots,N$。第 $i$ 头奶牛喜欢吃编号在 $\left[ l_i,r_i \right]$ 中的派（包括两端），并且没有两头奶牛喜欢吃相同范围的派。第 $i$ 头奶牛有一个体重 $w_i$，这是一个在 $\left[ 1,10^6 \right]$ 中的正整数。</p>
+<p>Farmer John 可以选择一个奶牛序列 $c_1,c_2,\dots,c_K$，并让这些奶牛按这个顺序轮流吃派。不幸的是，这些奶牛不知道分享！当奶牛  吃派时，她会把她喜欢吃的派都吃掉——也就是说，她会吃掉编号在 $[l_{c_i},r_{c_i}]$ 中所有剩余的派。Farmer John 想要避免当轮到一头奶牛吃派时，她所有喜欢的派在之前都被吃掉了这样尴尬的情况。因此，他想让你计算，要使奶牛按 $c_1,c_2,\dots,c_K$ 的顺序吃派，轮到这头奶牛时她喜欢的派至少剩余一个的情况下，这些奶牛的最大可能体重（$w_{c_1}+w_{c_2}+\ldots+w_{c_K}$）是多少。</p>
+<h2><span id="输入格式">输入格式</span></h2><p>第一行包含两个正整数 $N,M$；</p>
+<p>接下来 $M$ 行，每行三个正整数 $w_i,l_i,r_i$。</p>
+<h2><span id="输出格式">输出格式</span></h2><p>输出对于一个合法的序列，最大可能的体重值。</p>
+<h2><span id="样例-1">样例 #1</span></h2><h3><span id="样例输入-1">样例输入 #1</span></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">2 2<br>100 1 2<br>100 1 1<br></code></pre></td></tr></table></figure>
+
+<h3><span id="样例输出-1">样例输出 #1</span></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">200<br></code></pre></td></tr></table></figure>
+
+<h2><span id="提示">提示</span></h2><h4><span id="样例解释">样例解释</span></h4><p>在这个样例中，如果奶牛 $1$ 先吃，那么奶牛 $2$ 就吃不到派了。然而，先让奶牛 $2$ 吃，然后奶牛 $1$ 只吃编号为 $2$ 的派，仍可以满足条件。</p>
+<p>对于全部数据，$1 \le N \le 300,1 \le M \le \dfrac{N(N-1)}{2},1 \le l_i,r_i \le N,1 \le w_i \le 10^6$。</p>
+<h4><span id="数据范围">数据范围</span></h4><p>对于测试点 $2-5$，满足 $N \le 50,M \le 20$；</p>
+<p>对于测试点 $6-9$，满足 $N \le 50$。</p>
+<p>USACO 2019 December 铂金组T1</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">#include &lt;bits/stdc++.h&gt;<br>using namespace std;<br>int dp[310][310];<br>int he[310][310][310]; // a, b, c: 对于区间bc，位置a处最大能吃的牛的重量<br>int main() &#123;<br>	int n, m;<br>	cin &gt;&gt; n &gt;&gt; m; // 输入n和m的值<br><br>	int w, l, r;<br>	for (int i = 1; i &lt;= m; i++) &#123;<br>		cin &gt;&gt; w &gt;&gt; l &gt;&gt; r;<br>		for (int i = l; i &lt;= r; i++) &#123;<br>			he[i][l][r] = w; // 记录每个位置和区间的最大能吃的牛的重量<br>		&#125;<br>	&#125;<br><br>	// 动态规划预处理最大能吃的牛的重量<br>	for (int len = 0; len &lt; n; len++) &#123;<br>		for (int i = 1, j; i + len &lt;= n; i++) &#123;<br>			j = i + len;<br>			for (int k = i; k &lt;= j; k++) &#123;<br>				he[k][i - 1][j] = max(he[k][i - 1][j], he[k][i][j]);<br>				he[k][i][j + 1] = max(he[k][i][j + 1], he[k][i][j]);<br>			&#125;<br>		&#125;<br>	&#125;<br><br>	// 动态规划求解最优解<br>	for (int len = 0; len &lt; n; len++) &#123;<br>		for (int i = 1, j; i + len &lt;= n; i++) &#123;<br>			j = i + len;<br>			for (int k = i; k &lt; j; k++) &#123;<br>				dp[i][j] = max(dp[i][j], dp[i][k] + dp[k + 1][j]);<br>			&#125;<br>			for (int k = i; k &lt;= j; k++) &#123;<br>				dp[i][j] = max(dp[i][j], dp[i][k - 1] + dp[k + 1][j] + he[k][i][j]);<br>			&#125;<br>		&#125;<br>	&#125;<br><br>	cout &lt;&lt; dp[1][n];<br>	return 0;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P8756">P8756 [蓝桥杯 2021 省 AB2] 国际象棋</a></li>
+</ul>
+<h1><span id="蓝桥杯-2021-省-ab2-国际象棋">[蓝桥杯 2021 省 AB2] 国际象棋</span></h1><h2><span id="题目描述">题目描述</span></h2><p>众所周知， “八皇后” 问题是求解在国际象棋棋盘上摆放 $8$ 个皇后，使得两两之间互不攻击的方案数。已经学习了很多算法的小蓝觉得 “八皇后” 问题太简单了，意犹末尽。作为一个国际象棋迷，他想研究在 $N \times M$ 的棋盘上，摆放 $K$ 个马，使得两两之间互不攻击有多少种摆放方案。由于方案数可能很大，只需计算答案除以 $1000000007$ (即 $\left.10^{9}+7\right)$ 的余数。</p>
+<p>如下图所示，国际象棋中的马摆放在棋盘的方格内，走 “日” 字, 位于 $(x, y)$ 格的马（第 $x$ 行第 $y$ 列）可以攻击 $(x+1, y+2),(x+1, y-2),(x-1, y+2),(x-1, y-2),(x+2, y+1),(x+2, y-1),(x-2, y+1),(x-2, y-1)$ 共 $8$ 个 格子。</p>
+<p><img src="https://luogu.oss-cn-hangzhou.aliyuncs.com/upload/vjudge_pic/lanqiao/2022_09_29_68f9131d5c14c1f27e68g-12.jpg"></p>
+<h2><span id="输入格式">输入格式</span></h2><p>输入一行包含三个正整数 $N, M, K$, 分别表示棋盘的行数、列数和马的个数。</p>
+<h2><span id="输出格式">输出格式</span></h2><p>输出一个整数，表示摆放的方案数除以 $1000000007\left(\right.$ 即 $\left.10^{9}+7\right)$ 的余数。</p>
+<h2><span id="样例-1">样例 #1</span></h2><h3><span id="样例输入-1">样例输入 #1</span></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">1 2 1<br></code></pre></td></tr></table></figure>
+
+<h3><span id="样例输出-1">样例输出 #1</span></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">2<br></code></pre></td></tr></table></figure>
+
+<h2><span id="样例-2">样例 #2</span></h2><h3><span id="样例输入-2">样例输入 #2</span></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">4 4 3<br></code></pre></td></tr></table></figure>
+
+<h3><span id="样例输出-2">样例输出 #2</span></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">276<br></code></pre></td></tr></table></figure>
+
+<h2><span id="样例-3">样例 #3</span></h2><h3><span id="样例输入-3">样例输入 #3</span></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">3 20 12<br></code></pre></td></tr></table></figure>
+
+<h3><span id="样例输出-3">样例输出 #3</span></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">914051446<br></code></pre></td></tr></table></figure>
+
+<h2><span id="提示">提示</span></h2><p>对于 $5 %$ 的评测用例, $K&#x3D;1$;</p>
+<p>对于另外 $10 %$ 的评测用例, $K&#x3D;2$;</p>
+<p>对于另外 $10 %$ 的评测用例, $N&#x3D;1$;</p>
+<p>对于另外 $20 %$ 的评测用例, $N, M \leq 6, K \leq 5$;</p>
+<p>对于另外 $25 %$ 的评测用例, $N \leq 3, M \leq 20 ， K \leq 12$;</p>
+<p>对于所有评测用例, $1 \leq N \leq 6,1 \leq M \leq 100,1 \leq K \leq 20$。</p>
+<p>蓝桥杯 2021 第二轮省赛 A 组 I 题（B 组 J 题）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">#include &lt;bits/stdc++.h&gt;<br>using namespace std;<br>#define ll long long<br>const int P=1e9+7;<br>const int yasuo=64;<br><br>// 计算 a 的逆元（在模 P 下）<br>ll inv(ll a)&#123;<br>	ll m=P-2;<br>	ll ans=a;<br>	ll now=P;<br>	while(m!=0)&#123;<br>		if(m&amp;1)&#123;<br>			ans=(ans*now)%P;<br>		&#125;<br>		now=(now*now)%P;<br>		m=m&gt;&gt;1;<br>	&#125;<br>	return ans;<br>&#125;<br><br>// 判断两个位置是否互不攻击<br>bool gehang(int a,int c)&#123;<br>	int m=a;<br>	int n=c;<br>	m&gt;&gt;=1;<br>    if(m&amp;n) return false; <br>	m=a;<br>	n=c;<br>	n&gt;&gt;=1;<br>    if(m&amp;n) return false;<br>	return true;<br>&#125;<br><br>// 判断两个位置是否互不攻击（斜线方向）<br>bool xiangling(int a,int b)&#123;<br>	int m=a;<br>	int n=b;<br>	m&gt;&gt;=2;<br>    if(m&amp;n) return false;<br>	m=a;<br>	n=b;<br>	n&gt;&gt;=2;<br>    if(m&amp;n) return false;<br>	return true;<br>&#125;<br><br>int counts[64];<br>int dp[2][yasuo][yasuo][30]; // 前两行的信息，走的马数 <br><br>int main()&#123;<br>    int n,m,k;<br>    cin&gt;&gt;n&gt;&gt;m&gt;&gt;k;<br><br>    // 统计每个二进制位上 1 的个数<br>    for(int i=0;i&lt;64;i++)&#123;<br>    	int c=i,now=0;<br>		while(c!=0)&#123;<br>			if(c&amp;1)now++;<br>			c=c&gt;&gt;1;<br>		&#125;<br>		counts[i]=now; <br>	&#125;<br><br>	int ff=1&lt;&lt;n;  // 需要保存的状态压缩位数 <br><br>    for(int i=1;i&lt;=m;i++)&#123;<br>	    memset(dp[i%2],0,sizeof(dp[i%2]));<br>    	if(i==1)dp[0][0][0][0]=1;<br><br>    	for(int l=0;l&lt;ff;l++)&#123;<br>			for(int h=0;h&lt;ff;h++)&#123;<br>	    		for(int num=0;num&lt;=k;num++)&#123;<br>	    			if(!dp[(i-1)%2][h][l][num]) continue;<br>					for(int j=0;j&lt;ff;j++)&#123;<br>			    		if(xiangling(l,j)&amp;&amp;gehang(h,j))&#123;<br>			    			dp[i%2][l][j][num+counts[j]]=(dp[(i-1)%2][h][l][num]+dp[i%2][l][j][num+counts[j]])%P;<br>					&#125;<br>					&#125;<br>				&#125;<br>			&#125;<br>		&#125;<br>	&#125;<br><br>	ll ans=0;<br>    for(int i=0;i&lt;ff;i++)<br>    for(int j=0;j&lt;ff;j++)&#123;<br>    	ans=(ans+dp[m%2][i][j][k])%P;<br>	&#125;<br><br>	cout&lt;&lt;ans; <br>    return 0;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+	</article>
+
+	 
+  
+	<div class="kira-post-nav">
+		<nav class="post-nav">
+			  
+			<!-- 先找到与当前文字相同的目录 -->
+			            
+			<!-- 在找到当前文章所在的 index -->
+			            
+			<!-- 上一篇文章 -->
+			<div class="old">
+				<span>上一章</span>
+				<a href="/2023/09/13/%E5%9F%BA%E4%BA%8E-3D-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-CNN-%E7%9A%84%E9%98%BF%E5%B0%94%E5%85%B9%E6%B5%B7%E9%BB%98%E6%99%BA%E8%83%BD%E8%AF%8A%E6%96%AD-Web-%E5%BA%94%E7%94%A8/"> 基于 3D 卷积神经网络(CNN)的阿尔兹海默智能诊断 Web 应用</a>
+			</div>
+			                      
+		</nav>
+	</div>
+	
+	<div class="kira-post-meta kira-rainbow">
+		
+			<a class="kirafont icon-container-fill -link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+		
+		
+			<a class="kirafont icon-tag-fill -none-link" href="/tags/blog/" rel="tag">blog</a> <a class="kirafont icon-tag-fill -none-link" href="/tags/c/" rel="tag">c</a> <a class="kirafont icon-tag-fill -none-link" href="/tags/c/" rel="tag">c++</a>
+		
+	</div>
+	
+		<script src="/js/kira-code-copy.js"></script>
+	
+	
+	<div class="kira-post-footer">
+		
+
+		
+	</div>
+	
+</div>
+
+				</div>
+			</div>
+			<div class="kira-right-column">
+	<a onclick="document.querySelector('#kira-top-header').scrollIntoView({behavior: 'smooth'});" class="kira-backtotop" aria-label="回到顶部" title="回到顶部">
+		<button class="mdui-fab mdui-ripple">
+			<i class="kirafont icon-caret-up"></i>
+		</button>
+	</a>
+</div>
+
+		</div>
+	<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"superSample":2,"width":150,"height":300,"position":"right","hOffset":0,"vOffset":-20},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2},"log":false});</script></body>
+</html>
