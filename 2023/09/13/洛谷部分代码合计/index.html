@@ -80,9 +80,9 @@
 		</a>
 	</div>
 	<div class="kira-count">
-		<div><span>文章</span>7</div>
-		<div><span>标签</span>6</div>
-		<div><span>分类</span>4</div>
+		<div><span>文章</span>8</div>
+		<div><span>标签</span>7</div>
+		<div><span>分类</span>5</div>
 	</div>
 	<div class="kira-list">
 		
@@ -251,6 +251,13 @@
           </li>
         
           <li class="category-list-item">
+            <a class="category-list-link" href="/categories/整活/">
+              整活
+            </a>
+            <span class="category-list-count">1</span>
+          </li>
+        
+          <li class="category-list-item">
             <a class="category-list-link" href="/categories/番剧/">
               番剧
             </a>
@@ -265,7 +272,7 @@
 			
 	<div class="kira-widget-wrap">
 		<div id="randomtagcloud" class="kira-widget tagcloud kira-rainbow">
-			<a href="/tags/blog/" style="font-size: 20px;">blog</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/c/" style="font-size: 10px;">c++</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/python/" style="font-size: 10px;">python</a>
+			<a href="/tags/blog/" style="font-size: 20px;">blog</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/c/" style="font-size: 10px;">c++</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/sovit/" style="font-size: 10px;">sovit</a>
 		</div>
 		
 	</div>
@@ -358,7 +365,7 @@
 			<a><i class="kirafont icon-time-circle-fill"></i>大概 21 分钟</a>
 		</div>
 		<ul>
-<li>集合了我洛谷不看题解通过部分题目的代码<del>我的实力也就这样了</del>，贴心写了较为详细的中文注释，供各位学习思路</li>
+<li>集合了我洛谷不看题解通过部分题目的代码<del>我的实力也就这样了😩</del>，贴心写了较为详细的中文注释，供各位学习思路</li>
 <li>我的洛谷账号（现在基本不用了）：<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/user/611273">点此跳转</a></li>
 <li>由于我在hexo<strong>没有找到可用的插件</strong>对latex公式的支持，下方的变量<strong>显示会有问题</strong>，如果对公式有疑问，建议点击题目链接跳转阅读</li>
 <li><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P1450">P1450 [HAOI2008] 硬币购物</a></li>
@@ -375,7 +382,7 @@
 <h2><span id="提示">提示</span></h2><h4><span id="数据规模与约定">数据规模与约定</span></h4><ul>
 <li>对于 $100%$ 的数据，保证 $1 \leq c_i, d_i, s \leq 10^5$，$1 \leq n \leq 1000$。</li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">#include&lt;bits/stdc++.h&gt;<br>using namespace std;<br><br>int c[5]; // 硬币面值<br>int d[5]; // 每种硬币数量<br>long long ans[100000+10]; // 动态规划数组<br><br>long long ff(int a)&#123;<br>	if(a&lt;0)<br>		return 0;<br>	else<br>		return ans[a];<br>&#125;<br><br>int main() &#123;<br>	int n;<br>	cin&gt;&gt;c[1]&gt;&gt;c[2]&gt;&gt;c[3]&gt;&gt;c[4]&gt;&gt;n; // 输入硬币面值和购买次数<br><br>	for(int i=1;i&lt;=n;i++)&#123;<br>		int goal;<br>		cin&gt;&gt;d[1]&gt;&gt;d[2]&gt;&gt;d[3]&gt;&gt;d[4]&gt;&gt;goal; // 输入每次购买的硬币数量和目标价值<br><br>		memset(ans,0,sizeof(ans)); // 初始化动态规划数组<br>		ans[0]=1; // 初始值<br><br>		// 动态规划计算付款方法<br>		for(int j=1;j&lt;=4;j++)&#123;<br>			for(int s=0;s&lt;=goal-c[j];s++)&#123;<br>				ans[s+c[j]]+=ans[s];<br>			&#125;	<br>		&#125;<br><br>		// 计算不同付款方式的数量<br>		long long g[5];<br>		for(int j=1;j&lt;=4;j++)&#123;<br>			g[j]=(long long)(d[j]+1)*c[j];<br>		&#125;<br>		long long da[6];<br>		da[1]=ff(goal);<br>		da[2]=ff(goal-g[1])+ff(goal-g[2])+ff(goal-g[3])+ff(goal-g[4]);<br>		da[3]=ff(goal-g[1]-g[2])+ff(goal-g[1]-g[3])+ff(goal-g[1]-g[4])+ff(goal-g[2]-g[3])+ff(goal-g[2]-g[4])+ff(goal-g[3]-g[4]);<br>		da[4]=ff(goal-g[1]-g[2]-g[3])+ff(goal-g[1]-g[4]-g[3])+ff(goal-g[1]-g[2]-g[4])+ff(goal-g[4]-g[2]-g[3]);<br>		da[5]=ff(goal-g[1]-g[2]-g[3]-g[4]);<br><br>		cout&lt;&lt;da[1]-da[2]+da[3]-da[4]+da[5]&lt;&lt;endl; // 输出答案<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">#include&lt;bits/stdc++.h&gt;<br>using namespace std;<br><br>int c[5]; // 硬币面值<br>int d[5]; // 每种硬币数量<br>long long ans[100000+10]; // 动态规划数组<br><br>long long ff(int a)&#123;<br>	if(a&lt;0)<br>		return 0;<br>	else<br>		return ans[a];<br>&#125;<br><br>int main() &#123;<br>	int n;<br>	cin&gt;&gt;c[1]&gt;&gt;c[2]&gt;&gt;c[3]&gt;&gt;c[4]&gt;&gt;n; // 输入硬币面值和购买次数<br><br>	for(int i=1;i&lt;=n;i++)&#123;<br>		int goal;<br>		cin&gt;&gt;d[1]&gt;&gt;d[2]&gt;&gt;d[3]&gt;&gt;d[4]&gt;&gt;goal; // 输入每次购买的硬币数量和目标价值<br><br>		memset(ans,0,sizeof(ans)); // 初始化动态规划数组<br>		ans[0]=1; // 初始值<br><br>		// 动态规划计算付款方法<br>		for(int j=1;j&lt;=4;j++)&#123;<br>			for(int s=0;s&lt;=goal-c[j];s++)&#123;<br>				ans[s+c[j]]+=ans[s];<br>			&#125;<br>		&#125;<br><br>		// 计算不同付款方式的数量<br>		long long g[5];<br>		for(int j=1;j&lt;=4;j++)&#123;<br>			g[j]=(long long)(d[j]+1)*c[j];<br>		&#125;<br>		long long da[6];<br>		da[1]=ff(goal);<br>		da[2]=ff(goal-g[1])+ff(goal-g[2])+ff(goal-g[3])+ff(goal-g[4]);<br>		da[3]=ff(goal-g[1]-g[2])+ff(goal-g[1]-g[3])+ff(goal-g[1]-g[4])+ff(goal-g[2]-g[3])+ff(goal-g[2]-g[4])+ff(goal-g[3]-g[4]);<br>		da[4]=ff(goal-g[1]-g[2]-g[3])+ff(goal-g[1]-g[4]-g[3])+ff(goal-g[1]-g[2]-g[4])+ff(goal-g[4]-g[2]-g[3]);<br>		da[5]=ff(goal-g[1]-g[2]-g[3]-g[4]);<br><br>		cout&lt;&lt;da[1]-da[2]+da[3]-da[4]+da[5]&lt;&lt;endl; // 输出答案<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <ul>
 <li><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P2024">P2024 [NOI2001] 食物链</a></li>
@@ -492,7 +499,7 @@
 				<span>上一章</span>
 				<a href="/2023/09/13/%E5%9F%BA%E4%BA%8E-3D-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-CNN-%E7%9A%84%E9%98%BF%E5%B0%94%E5%85%B9%E6%B5%B7%E9%BB%98%E6%99%BA%E8%83%BD%E8%AF%8A%E6%96%AD-Web-%E5%BA%94%E7%94%A8/"> 基于 3D 卷积神经网络(CNN)的阿尔兹海默智能诊断 Web 应用</a>
 			</div>
-			                      
+			                          
 		</nav>
 	</div>
 	

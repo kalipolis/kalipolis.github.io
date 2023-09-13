@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html 
+	lang="zh-CN">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		
+<link rel="stylesheet" href="/css/layout.css">
+
+		
+		<title> sovit-4.0 合成音乐模型 -  kalipolis的个人网站</title>
+		<link rel="stylesheet" href="https://unpkg.com/mdui@1.0.2/dist/css/mdui.min.css" />
+		<script src="https://unpkg.com/mdui@1.0.2/dist/js/mdui.min.js"></script>
+		<!-- lazyload -->
+		<script src="https://unpkg.com/lazysizes@5.1.0/lazysizes.min.js"></script>
+		<!-- smooth-scrolling -->
+		<script src="https://unpkg.com/smooth-scrolling.js@1.0.0"></script>
+		<!-- highlight -->
+		<link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.6.0/styles/atom-one-dark.min.css" />
+		<script src="//unpkg.com/@highlightjs/cdn-assets@11.6.0/highlight.min.js"></script>
+		<!-- 预置 kiraicon -->
+		
+<link rel="stylesheet" href="/lib/iconfont/iconfont.css">
+
+		
+		<link
+			rel="shortcut icon"
+			href="/favicon.png"
+			type="image/png"
+		/>
+		
+<link rel="stylesheet" href="/deps/css/APlayer.min.css">
+
+		
+			
+				
+<link rel="stylesheet" href="/style.css">
+
+			
+				
+<link rel="stylesheet" href="/custom.css">
+
+			
+		
+		
+<script src="/deps/js/APlayer.min.js"></script>
+<script src="/deps/js/Meting.min.js"></script>
+
+	<meta name="generator" content="Hexo 6.3.0"><link rel="stylesheet" href="\assets\css\APlayer.min.css" class="aplayer-style-marker">
+<script src="\assets\js\APlayer.min.js" class="aplayer-script-marker"></script>
+</head>
+
+	<body>
+		<div
+			class="kira-background"
+			style="background-image: url('/tagagison.jpg')"
+		></div>
+		<div class="kira-header">
+    <a
+        class="kira-drawer-button mdui-ripple"
+        title="导航栏"
+        onclick="document.querySelector('.kira-sidebar-modal').classList.add('show');document.querySelector('.kira-sidebar#sidebar').classList.add('show');"
+    >
+        <i class="kirafont icon-menu"></i>
+    </a>
+    <a href="/" title="kalipolis的个人网站">
+        <img
+			src="/favicon.jpg"
+			alt="kalipolis"
+		/>
+    </a>
+</div>
+		<div class="kira-body">
+			<div class="kira-sidebar" id="sidebar">
+	<div class="kira-avatar mdui-ripple">
+		<a href="/favicon.jpg" title="kalipolis">
+			<img
+				src="/favicon.jpg"
+				alt="kalipolis"
+			/>
+		</a>
+	</div>
+	<div class="kira-count">
+		<div><span>文章</span>8</div>
+		<div><span>标签</span>7</div>
+		<div><span>分类</span>5</div>
+	</div>
+	<div class="kira-list">
+		
+		<a
+			class="kira-list-item mdui-ripple false"
+			href="/"
+			title="回到首页"
+		>
+			<i
+				class="kirafont
+					
+						icon-home
+					"
+			></i>
+			<div class="kira-list-item-content">
+				回到首页
+			</div>
+		</a>
+		
+		<a
+			class="kira-list-item mdui-ripple false"
+			href="/about.html"
+			title="关于本人"
+		>
+			<i
+				class="kirafont
+					
+						icon-user
+					"
+			></i>
+			<div class="kira-list-item-content">
+				关于本人
+			</div>
+		</a>
+		
+		<a
+			class="kira-list-item mdui-ripple false"
+			href="/archive.html"
+			title="文章归档"
+		>
+			<i
+				class="kirafont
+					
+						icon-container
+					"
+			></i>
+			<div class="kira-list-item-content">
+				文章归档
+			</div>
+		</a>
+		
+		<a
+			class="kira-list-item mdui-ripple false"
+			href="/friends.html"
+			title="朋友的个人网站"
+		>
+			<i
+				class="kirafont
+					
+						icon-team
+					"
+			></i>
+			<div class="kira-list-item-content">
+				朋友的个人网站
+			</div>
+		</a>
+		
+	</div>
+	<aside id="kira-sidebar">
+		
+			<div class="kira-widget-wrap">
+	<div class="kira-widget kira-social">
+		
+			<a
+				class="mdui-ripple"
+				href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=1753573997&website=www.oicqzone.com"
+				target="_blank"
+				mdui-tooltip="{content: 'QQ'}"
+				style="color: rgb(49, 174, 255); background-color: rgba(49, 174, 255, .1);"
+			>
+				<i
+					class="kirafont
+					
+						icon-QQ
+					"
+				></i>
+			</a>
+		
+			<a
+				class="mdui-ripple"
+				href="https://space.bilibili.com/384132756"
+				target="_blank"
+				mdui-tooltip="{content: '哔哩哔哩'}"
+				style="color: rgb(231, 106, 141); background-color: rgba(231, 106, 141, .15);"
+			>
+				<i
+					class="kirafont
+					
+						icon-bilibili
+					"
+				></i>
+			</a>
+		
+			<a
+				class="mdui-ripple"
+				href="https://github.com/kalipolis/"
+				target="_blank"
+				mdui-tooltip="{content: 'GitHub'}"
+				style="color: rgb(25, 23, 23); background-color: rgba(25, 23, 23, .15);"
+			>
+				<i
+					class="kirafont
+					
+						icon-github
+					"
+				></i>
+			</a>
+		
+			<a
+				class="mdui-ripple"
+				href="https://gitee.com/kalipolis/"
+				target="_blank"
+				mdui-tooltip="{content: 'Gitee'}"
+				style="color: rgb(165, 15, 15); background-color: rgba(165, 15, 15, .15);"
+			>
+				<i
+					class="kirafont
+					
+						icon-gitee
+					"
+				></i>
+			</a>
+		
+	</div>
+</div>
+
+		
+			
+  <div class="kira-widget-wrap">
+    <h3 class="kira-widget-title">分类</h3>
+    <div class="kira-widget">
+      <ul class="category-list">
+        
+        
+
+        
+          <li class="category-list-item">
+            <a class="category-list-link" href="/categories/关于本项目/">
+              关于本项目
+            </a>
+            <span class="category-list-count">1</span>
+          </li>
+        
+          <li class="category-list-item">
+            <a class="category-list-link" href="/categories/分享/">
+              分享
+            </a>
+            <span class="category-list-count">1</span>
+          </li>
+        
+          <li class="category-list-item">
+            <a class="category-list-link" href="/categories/技术/">
+              技术
+            </a>
+            <span class="category-list-count">4</span>
+          </li>
+        
+          <li class="category-list-item">
+            <a class="category-list-link" href="/categories/整活/">
+              整活
+            </a>
+            <span class="category-list-count">1</span>
+          </li>
+        
+          <li class="category-list-item">
+            <a class="category-list-link" href="/categories/番剧/">
+              番剧
+            </a>
+            <span class="category-list-count">1</span>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+		
+			
+	<div class="kira-widget-wrap">
+		<div id="randomtagcloud" class="kira-widget tagcloud kira-rainbow">
+			<a href="/tags/blog/" style="font-size: 20px;">blog</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/c/" style="font-size: 10px;">c++</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/sovit/" style="font-size: 10px;">sovit</a>
+		</div>
+		
+	</div>
+
+
+		
+	</aside>
+	<div class="kira-copyright">
+		&copy; 2023
+		<a href="/">kalipolis</a>
+		Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> &
+		<a href="https://github.com/ch1ny/kira-hexo/" target="_blank">Kira-Hexo</a>
+		<br />
+		
+		
+	</div>
+</div>
+<div
+	class="kira-sidebar-modal"
+	id="sidebar-modal"
+	onclick="(function(self) {
+		self.classList.remove('show');
+		document.querySelector('.kira-sidebar.show#sidebar').classList.remove('show');
+	})(this)"
+></div>
+			<div class="kira-content">
+				<div id="kira-top-header"></div>
+				<div class="kira-main-content">
+					
+<link rel="stylesheet" href="/css/kira-image.css">
+
+
+<script src="/js/kira-image.js"></script>
+
+<div class="kira-image">
+    <div class="kira-image-modal">
+        <div class="kira-image-header">
+            <div class="kira-image-counter"></div>
+            <div class="kira-image-title"></div>
+            <div class="kira-image-operation">
+                <div class="kira-image-operation-button" id="kira-image-operation-button-zoom">
+                    <i class="kirafont icon-zoom-in"></i>
+                </div>
+                <div class="kira-image-operation-button" id="kira-image-operation-button-close">
+                    <i class="kirafont icon-close"></i>
+                </div>
+            </div>
+        </div>
+        <div class="kira-image-container">
+            <div class="kira-image-prev-button-panel">
+                <div class="kira-image-exchange-button">
+                    <i class="kirafont icon-left"></i>
+                </div>
+            </div>
+            <div class="kira-image-list">
+                <div class="kira-image-prev">
+                    <img />
+                </div>
+                <div class="kira-image-now">
+                    <img />
+                </div>
+                <div class="kira-image-next">
+                    <img />
+                </div>
+            </div>
+            <div class="kira-image-next-button-panel">
+                <div class="kira-image-exchange-button">
+                    <i class="kirafont icon-right"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="kira-post">
+	<article>
+		
+		<div class="kira-post-cover">
+			<img
+				data-src="/img/Megumin&Emilia.png"
+				data-sizes="auto"
+				alt="sovit-4.0 合成音乐模型"
+				class="lazyload kira-post-cover-image disabled-kira-image"
+			/>
+			<h1>sovit-4.0 合成音乐模型</h1>
+		</div>
+		
+		<div class="kira-post-meta kira-rainbow" style="margin:10px 0!important;">
+			<a><i class="kirafont icon-calendar-fill"></i>2023年09月13日</a>
+			<a><i class="kirafont icon-edit-fill"></i>632 字</a>
+			<a><i class="kirafont icon-time-circle-fill"></i>大概 2 分钟</a>
+		</div>
+		<h1><span id="sovits模型介绍">Sovits模型介绍</span></h1><ul>
+<li>So-vits-svc（也称Sovits）是由是中国民间歌声合成爱好者Rcell基于VITS、soft-vc、VISinger2等一系列项目开发的一款开源免费AI语音转换软件，通过SoftVC内容编码器提取源音频语音特征，与F0同时输入VITS替换原本的文本输入达到歌声转换的效果</li>
+<li>介绍视频（关注这个up谢谢喵😋）：</li>
+</ul>
+<iframe src="https://player.bilibili.com/player.html?bvid=BV1H24y187Ko&page=1&as_wide=1&high_quality=1&danmaku=0" style="width: 62em; height: 35em;" allowfullscreen="allowfullscreen" width="100%" height="100%" scrolling="no" frameborder="0" sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"></iframe>
+
+<h5><span id="具体使用方法视频中已经写的很清楚了这里讲一下我使用此模型的经验">具体使用方法视频中已经写的很清楚了，这里讲一下我使用此模型的经验：</span></h5><ol>
+<li>训练集起码需要20分钟才能有相对比较好的效果</li>
+<li>参数中可以调整每多少个epoch输出一次模型，如果你的数据集过小，请把输出的epoch数也改小（比如调成200），防止过拟合</li>
+<li>这个模型跑的真的很慢，并且很耗算力，碰到迟迟不输出不要着急，等一会再看看有没有输出结果</li>
+<li>数据集过小非常容易过拟合，如果你的数据集只有5~10分钟，那么epoch为200时效果应该是最好的，<strong>请感谢强大的底模</strong></li>
+<li>最好部署在云端跑项目，现行电脑跑这个模型是比较吃力的</li>
+</ol>
+<ul>
+<li>大家可以用这个网站体验一下Sovits模型的效果：<a target="_blank" rel="noopener" href="https://huggingface.co/spaces/zomehwh/sovits-teio">网站链接</a>，传入20s内的音频，可以转成网站内置的角色音色<del>不要问为什么都是赛马娘角色</del></li>
+<li>我利用这个模型训练了一个高桥李依的音色，800epoch</li>
+</ul>
+
+        <div id="aplayer-LxssoAAk" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+            <pre class="aplayer-lrc-content"></pre>
+        </div>
+        <script>
+          var ap = new APlayer({
+            element: document.getElementById("aplayer-LxssoAAk"),
+            narrow: false,
+            autoplay: false,
+            showlrc: false,
+            music: {
+              title: "可愛くてごめん—高桥李依",
+              author: "kalipolis",
+              url: "可愛くてごめん—高桥李依.mp3",
+              pic: "",
+              lrc: ""
+            }
+          });
+          window.aplayers || (window.aplayers = []);
+          window.aplayers.push(ap);
+        </script>
+
+<ul>
+<li>可以看到训练效果是不佳的，主要是当时模型刚刚出来，没有均值滤波等功能，容易出现气声，后续羽毛布团大佬经过改进，我们已经可以完成不错的声音训练了</li>
+<li>我使用一个同学的几段录音文稿，数据集7分钟左右，训练了200epoch的模型，并套在春物主题曲上，使用au和原声合成<del>这位同学很满意</del></li>
+</ul>
+
+        <div id="aplayer-BIVqAeox" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+            <pre class="aplayer-lrc-content"></pre>
+        </div>
+        <script>
+          var ap = new APlayer({
+            element: document.getElementById("aplayer-BIVqAeox"),
+            narrow: false,
+            autoplay: false,
+            showlrc: false,
+            music: {
+              title: "ユキトキ",
+              author: "kalipolis",
+              url: "[ai]zqj-ユキトキ by tjh.mp3",
+              pic: "",
+              lrc: ""
+            }
+          });
+          window.aplayers || (window.aplayers = []);
+          window.aplayers.push(ap);
+        </script>
+
+<ul>
+<li>在数据集较小的情况下，不要训练太多次数，4~5轮已经很够了，不然你会听到大量的电音<del>中国有嘻哈</del></li>
+</ul>
+
+	</article>
+
+	 
+  
+	<div class="kira-post-nav">
+		<nav class="post-nav">
+			                  
+			<!-- 先找到与当前文字相同的目录 -->
+			   
+			<!-- 在找到当前文章所在的 index -->
+			          
+		</nav>
+	</div>
+	
+	<div class="kira-post-meta kira-rainbow">
+		
+			<a class="kirafont icon-container-fill -link" href="/categories/%E6%95%B4%E6%B4%BB/">整活</a>
+		
+		
+			<a class="kirafont icon-tag-fill -none-link" href="/tags/blog/" rel="tag">blog</a> <a class="kirafont icon-tag-fill -none-link" href="/tags/sovit/" rel="tag">sovit</a>
+		
+	</div>
+	
+		<script src="/js/kira-code-copy.js"></script>
+	
+	
+	<div class="kira-post-footer">
+		
+
+		
+	</div>
+	
+</div>
+
+				</div>
+			</div>
+			<div class="kira-right-column">
+	<a onclick="document.querySelector('#kira-top-header').scrollIntoView({behavior: 'smooth'});" class="kira-backtotop" aria-label="回到顶部" title="回到顶部">
+		<button class="mdui-fab mdui-ripple">
+			<i class="kirafont icon-caret-up"></i>
+		</button>
+	</a>
+</div>
+
+		</div>
+	<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"superSample":2,"width":150,"height":300,"position":"right","hOffset":0,"vOffset":-20},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2},"log":false});</script></body>
+</html>
