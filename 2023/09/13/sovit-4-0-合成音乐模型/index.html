@@ -363,7 +363,7 @@
 		
 		<div class="kira-post-meta kira-rainbow" style="margin:10px 0!important;">
 			<a><i class="kirafont icon-calendar-fill"></i>2023年09月13日</a>
-			<a><i class="kirafont icon-edit-fill"></i>632 字</a>
+			<a><i class="kirafont icon-edit-fill"></i>658 字</a>
 			<a><i class="kirafont icon-time-circle-fill"></i>大概 2 分钟</a>
 		</div>
 		<h1><span id="sovits模型介绍">Sovits模型介绍</span></h1><ul>
@@ -381,15 +381,15 @@
 </ol>
 <ul>
 <li>大家可以用这个网站体验一下Sovits模型的效果：<a target="_blank" rel="noopener" href="https://huggingface.co/spaces/zomehwh/sovits-teio">网站链接</a>，传入20s内的音频，可以转成网站内置的角色音色<del>不要问为什么都是赛马娘角色</del></li>
-<li>我利用这个模型训练了一个高桥李依的音色，800epoch</li>
+<li>我利用这个模型训练了一个高桥李依的音色，训练集1小时，800epoch</li>
 </ul>
 
-        <div id="aplayer-LxssoAAk" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+        <div id="aplayer-nuzvRpVd" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
             <pre class="aplayer-lrc-content"></pre>
         </div>
         <script>
           var ap = new APlayer({
-            element: document.getElementById("aplayer-LxssoAAk"),
+            element: document.getElementById("aplayer-nuzvRpVd"),
             narrow: false,
             autoplay: false,
             showlrc: false,
@@ -406,23 +406,23 @@
         </script>
 
 <ul>
-<li>可以看到训练效果是不佳的，主要是当时模型刚刚出来，没有均值滤波等功能，容易出现气声，后续羽毛布团大佬经过改进，我们已经可以完成不错的声音训练了</li>
+<li>可以听出很明显的李依李个人音色，但是训练效果算不上好，主要是当时模型刚刚出来，没有均值滤波等功能，容易出现气声，加上我epoch确实跑的太少了，后续羽毛布团大佬经过改进，我们已经可以完成不错的声音训练了</li>
 <li>我使用一个同学的几段录音文稿，数据集7分钟左右，训练了200epoch的模型，并套在春物主题曲上，使用au和原声合成<del>这位同学很满意</del></li>
 </ul>
 
-        <div id="aplayer-BIVqAeox" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+        <div id="aplayer-vlVMYXka" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
             <pre class="aplayer-lrc-content"></pre>
         </div>
         <script>
           var ap = new APlayer({
-            element: document.getElementById("aplayer-BIVqAeox"),
+            element: document.getElementById("aplayer-vlVMYXka"),
             narrow: false,
             autoplay: false,
             showlrc: false,
             music: {
               title: "ユキトキ",
               author: "kalipolis",
-              url: "[ai]zqj-ユキトキ by tjh.mp3",
+              url: "ユキトキ.mp3",
               pic: "",
               lrc: ""
             }
@@ -432,12 +432,20 @@
         </script>
 
 <ul>
-<li>在数据集较小的情况下，不要训练太多次数，4~5轮已经很够了，不然你会听到大量的电音<del>中国有嘻哈</del></li>
+<li>在数据集较小的情况下，不要训练太多次数，7~8轮已经很够了，不然你会听到大量的电音<del>中国有嘻哈</del></li>
 </ul>
 
 	</article>
 
 	 
+    <div class="kira-post-copyright">
+        <strong>本文作者：</strong>kalipolis<br>
+        <strong>本文链接：</strong><a href="http://example.com/2023/09/13/sovit-4-0-%E5%90%88%E6%88%90%E9%9F%B3%E4%B9%90%E6%A8%A1%E5%9E%8B/" title="http:&#x2F;&#x2F;example.com&#x2F;2023&#x2F;09&#x2F;13&#x2F;sovit-4-0-合成音乐模型&#x2F;" target="_blank" rel="noopener">http:&#x2F;&#x2F;example.com&#x2F;2023&#x2F;09&#x2F;13&#x2F;sovit-4-0-合成音乐模型&#x2F;</a><br>
+        
+            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+        
+    </div>
+
   
 	<div class="kira-post-nav">
 		<nav class="post-nav">
@@ -463,6 +471,22 @@
 	
 	<div class="kira-post-footer">
 		
+	<link rel="stylesheet" href="https://unpkg.com/gitalk@latest/dist/gitalk.css" />
+	<div id="gitalk"></div>
+	<script src="https://unpkg.com/gitalk@latest/dist/gitalk.min.js"></script>
+	<script type="text/javascript">
+		const gitalk = new Gitalk({
+			clientID: '-id-',
+			clientSecret: '-key-',
+			id: 'sovit-4.0 合成音乐模型',
+			repo: '-issue repo name-',
+			owner: '-your github username-',
+			admin: '-your github username-',
+			title: '',
+		});
+		gitalk.render('gitalk');
+	</script>
+
 
 		
 	</div>

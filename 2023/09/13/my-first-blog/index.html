@@ -361,7 +361,7 @@
 		
 		<div class="kira-post-meta kira-rainbow" style="margin:10px 0!important;">
 			<a><i class="kirafont icon-calendar-fill"></i>2023年09月13日</a>
-			<a><i class="kirafont icon-edit-fill"></i>516 字</a>
+			<a><i class="kirafont icon-edit-fill"></i>636 字</a>
 			<a><i class="kirafont icon-time-circle-fill"></i>大概 2 分钟</a>
 		</div>
 		<ul>
@@ -372,19 +372,29 @@
 <li>下面这个视频可以简要介绍搭建个人博客的过程，但是不建议直接参考执行（都是我踩过的坑www），由于各种框架版本更新的原因，请仔细查阅官方文档学习。</li>
 <li><iframe src="https://player.bilibili.com/player.html?bvid=1ts4y1f7Gu&page=1&as_wide=1&high_quality=1&danmaku=0" style="width: 62em; height: 35em;" allowfullscreen="allowfullscreen" width="100%" height="100%" scrolling="no" frameborder="0" sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"></iframe></li>
 <li>在搭建这个博客的过程中，我学习了hexo框架和markdown语法，使用了部分html与js知识，最终完成了整个部分的搭建</li>
-<li>使用了kira这个主题：<a target="_blank" rel="noopener" href="https://hexo.kira.host/" title="点击跳转">kira帮助文档</a></li>
+<li>使用了kira这个主题：<a target="_blank" rel="noopener" href="https://hexo.kira.host/" title="点击跳转">kira帮助文档</a>，该作者也基于这个主题搭建了自己的个人博客：<a target="_blank" rel="noopener" href="https://kira.host/">德布罗煜的个人网站</a>，再次感谢主题作者，Ciallo～(∠・ω&lt; )⌒★</li>
 <li>其基于Nexmoe这个主题库进行了扩展：<a target="_blank" rel="noopener" href="https://docs.nexmoe.com/zh/v4.0/config/style.html" title="点击跳转">Nexmoe帮助文档</a>。如果你想像我一样搭建这个个人博客，请结合两篇帮助文档一起看，会有很大帮助。</li>
 <li>markdown语法使用vscode中的Office Viewer插件，进行实时编辑预览。</li>
 <li>最后上传到gitee中：<a target="_blank" rel="noopener" href="https://help.gitee.com/services/gitee-pages/intro" title="点击跳转">Gitee Pages</a></li>
 <li>live2d模型插件：<a target="_blank" rel="noopener" href="https://github.com/EYHN/hexo-helper-live2d" title="点击跳转">hexo-helper-live2d</a> 为什么只支持moc不支持moc3啊啊啊啊</li>
 <li>把以前写的部分帖子和部分代码发了过来，但是本人是个三分钟热度的懒狗，后续不定期更新</li>
 <li>本博客中的内容，除非另有标注，否则均为本人所创或本人参与创作，如果引用本博客内容，请注明来源</li>
+<li>本项目中的所有头图集合在项目中的img文件夹，大家可以自行下载取用，这里大部分动漫头图下载自<a target="_blank" rel="noopener" href="https://wallhaven.cc/">wallhaven</a>，给大家安利一波</li>
+<li><h3><span id="鸣谢">鸣谢：</span></h3>郭同学协助我进行的gitee身份认证拍照，任爷提供的github项目demo部署指导</li>
 <li>十分感谢浏览我的网站，如果你对我的网站有任何想法和意见，由于我这个是<strong>静态网站</strong>，没有后端数据库，网站上评论是做不到的，不过你可以去我的<a target="_blank" rel="noopener" href="https://gitee.com/kalipolis/personal-blog/issues" title="点击跳转">gitee项目主页</a>提交issue来提供建议，或是通过左边我的联系方式联系我💗</li>
 </ul>
 
 	</article>
 
 	 
+    <div class="kira-post-copyright">
+        <strong>本文作者：</strong>kalipolis<br>
+        <strong>本文链接：</strong><a href="http://example.com/2023/09/13/my-first-blog/" title="http:&#x2F;&#x2F;example.com&#x2F;2023&#x2F;09&#x2F;13&#x2F;my-first-blog&#x2F;" target="_blank" rel="noopener">http:&#x2F;&#x2F;example.com&#x2F;2023&#x2F;09&#x2F;13&#x2F;my-first-blog&#x2F;</a><br>
+        
+            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+        
+    </div>
+
   
 	<div class="kira-post-nav">
 		<nav class="post-nav">
@@ -410,6 +420,22 @@
 	
 	<div class="kira-post-footer">
 		
+	<link rel="stylesheet" href="https://unpkg.com/gitalk@latest/dist/gitalk.css" />
+	<div id="gitalk"></div>
+	<script src="https://unpkg.com/gitalk@latest/dist/gitalk.min.js"></script>
+	<script type="text/javascript">
+		const gitalk = new Gitalk({
+			clientID: '-id-',
+			clientSecret: '-key-',
+			id: '关于这个个人博客',
+			repo: '-issue repo name-',
+			owner: '-your github username-',
+			admin: '-your github username-',
+			title: '',
+		});
+		gitalk.render('gitalk');
+	</script>
+
 
 		
 	</div>
