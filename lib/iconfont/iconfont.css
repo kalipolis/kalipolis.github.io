@@ -4,15 +4,6 @@
        url('iconfont.woff?t=1679498690298') format('woff'),
        url('iconfont.ttf?t=1679498690298') format('truetype');
 }
-
-.kirafont {
-  font-family: "kirafont" !important;
-  font-size: 16px;
-  font-style: normal;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 .icon-unordered-list:before {
   content: "\e7f5";
 }
@@ -115,5 +106,70 @@
 
 .icon-github:before {
   content: "\e885";
+}
+@font-face {
+  font-family: "kirafont"; /* Project id 4252632 */
+  src: url('iconfont2.woff2?t=1694692906117') format('woff2'),
+       url('iconfont2.woff?t=1694692906117') format('woff'),
+       url('iconfont2.ttf?t=1694692906117') format('truetype');
+}
+.kirafont {
+  font-family: "kirafont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.kirafont {
+  font-family: "kirafont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.kirafont-weixin:before {
+  content: "\e607";
+}
+
+.kirafont-steam:before {
+  content: "\e610";
+}
+
+.kirafont-wangyiyunyinle:before {
+  content: "\e60b";
+}
+
+.kirafont-bangumi:before {
+  content: "\e602";
+}
+  font-family: "kirafont"; /* Project id 4252632 */
+  src: url('iconfont2.woff2?t=1694694076720') format('woff2'),
+       url('iconfont2.woff?t=1694694076720') format('woff'),
+       url('iconfont2.ttf?t=1694694076720') format('truetype');
+}
+
+.kirafont {
+  font-family: "kirafont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.kirafont-wangyiyunyinleclick:before {
+  content: "\e600";
+}
+
+.kirafont-weixin:before {
+  content: "\e607";
+}
+
+.kirafont-steam:before {
+  content: "\e610";
+}
+
+.kirafont-bangumi:before {
+  content: "\e602";
 }
 
