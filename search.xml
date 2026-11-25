@@ -1,0 +1,1423 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>java曲线系统</title>
+    <url>//2023/09/13/java%E6%9B%B2%E7%BA%BF%E7%B3%BB%E7%BB%9F/</url>
+    <content><![CDATA[
+simple-curve-system本项目由我和任爷共同开发，作为java面向对象编程的大作业
+基于 JavaSwing 的简单动态曲线系统：在图形界面 (GUI) 上动态绘制几种自左至右移动的简单曲线，同时动态显示对应坐标值。运用多线程，泛型同步技术，实现曲线动态同步绘制，曲线绘制与对应坐标数值的同步显示。曲线绘制的用户自主切换，启停，重置。
+项目地址：点击跳转
+功能介绍
+在 JavaSwing 图形界面 (GUI) 上动态绘制几种自左至右移动的简单曲线，同时动态显示对应坐标值
+运用多线程，泛型同步技术，实现曲线动态同步绘制，曲线绘制与对应坐标数值的同步显示
+实现曲线绘制的用户自主切换，启停，重置
+注释详细，易复现
+
+功能展示曲线系统包含四个函数切换按钮，一个重置x坐标按钮，和两个互斥的启停按钮。红线为当前x的值，黑线是坐标轴。
+可以看到函数图像y&#x3D;x的x和y值相对，x和y的值显示正确且同步。多种曲线。
+项目运行java 版本 1.8.0_361
+在项目根目录下，编译
+javac -encoding utf8 CurveSystem.java
+
+运行
+java -Dfile.encoding=utf8 CurveSystem
+
+项目结构│  CurveSystem.class│  CurveSystem.java│  LICENSE│  README.md│└─readme_img
+
+
+CurveSystem.java 是源代码文件
+CurveSystem.class 是编译后的字节码
+readme_img 文件夹存放 readme 文档的图片
+
+开源许可证此翻译版本仅供参考，以 LICENSE 文件中的英文版本为准
+MIT 开源许可证：
+版权所有 (c) 2023 bytesc
+特此授权，免费向任何获得本软件及相关文档文件（以下简称“软件”）副本的人提供使用、复制、修改、合并、出版、发行、再许可和&#x2F;或销售软件的权利，但须遵守以下条件：
+上述版权声明和本许可声明应包含在所有副本或实质性部分中。
+本软件按“原样”提供，不作任何明示或暗示的保证，包括但不限于适销性、特定用途适用性和非侵权性。在任何情况下，作者或版权持有人均不对因使用本软件而产生的任何索赔、损害或其他责任负责，无论是在合同、侵权或其他方面。
+
+原文作者：kalipolis。许可：CC BY-NC-SA 3.0 CN。
+
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>blog</tag>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ARIMA预测每日进货价变化趋势</title>
+    <url>//2023/09/13/ARIMA/</url>
+    <content><![CDATA[
+
+本文数据来自2023年大学生数学建模c题
+文章代码部分借鉴来源：CSDN链接Arima模型介绍：
+
+图中部分代码块为验证模型可行性，非必要部分，如若需要使用请取消注释后再复制
+数据源为我自行处理原题附件后得到，如果需要复现代码，请通过左侧联系方式私信我说明用途，以获取数据集
+
+classname = &#x27;食用菌&#x27;goal=&#x27;批发价格(元/千克)&#x27;
+
+import numpy as npimport pandas as pdimport matplotlib.pyplot as pltplt.style.use(&#x27;fivethirtyeight&#x27;)from matplotlib.pylab import rcParamsrcParams[&#x27;figure.figsize&#x27;] = 28, 18import statsmodels.api as smfrom statsmodels.tsa.stattools import adfullerfrom statsmodels.tsa.seasonal import seasonal_decomposeimport itertoolsimport warningswarnings.filterwarnings(&quot;ignore&quot;)import matplotlib.font_manager as fmfrom pylab import mplmpl.rcParams[&#x27;font.sans-serif&#x27;] = [&#x27;Microsoft YaHei&#x27;] # 指定默认字体：解决plot不能显示中文问题mpl.rcParams[&#x27;axes.unicode_minus&#x27;] = False # 解决保存图像是负号&#x27;-&#x27;显示为方块的问题
+
+dateparse = lambda x: pd.to_datetime(x, format=&#x27;%Y%m&#x27;, errors = &#x27;coerce&#x27;)df = pd.read_excel(&quot;品类数据总表（不含公式）.xlsx&quot;)ts = df[pd.Series(pd.to_datetime(df.index, errors=&#x27;coerce&#x27;)).notnull().values]ts.info()
+
+&lt;class &#x27;pandas.core.frame.DataFrame&#x27;&gt;Int64Index: 6474 entries, 0 to 6473Data columns (total 7 columns): #   Column      Non-Null Count  Dtype---  ------      --------------  -----0   分类名称        6474 non-null   object1   销售日期        6474 non-null   datetime64[ns] 2   当日销量        6474 non-null   float643   当日销售额       6474 non-null   float644   当日成本价       6474 non-null   float645   利润率         6474 non-null   float646   批发价格(元/千克)  6474 non-null   float64dtypes: datetime64[ns](1), float64(5), object(1)memory usage: 404.6+ KB
+
+print(ts)
+
+分类名称       销售日期     当日销量      当日销售额      当日成本价       利润率  批发价格(元/千克)0       花菜类 2023-06-30   28.087   158.5008  130.10274  0.218274    4.6321341       花叶类 2023-06-30  130.464  1074.7548  651.58428  0.649449    4.9943612       辣椒类 2023-06-30   82.286   257.1340  189.63585  0.355936    2.3045943        茄类 2023-06-30   24.530   320.5760  199.12260  0.609943    8.1175134       食用菌 2023-06-30   39.572    70.2838   44.78568  0.569336    1.131752...     ...        ...      ...        ...        ...       ...         ...6469    花叶类 2020-07-01  205.402   323.3425  222.12993  0.455646    1.0814406470    辣椒类 2020-07-01   76.715   673.6922  387.39842  0.739016    5.0498396471     茄类 2020-07-01   35.374   293.7380  180.00814  0.631804    5.0887136472    食用菌 2020-07-01   35.365   724.4486  472.95274  0.531757   13.3734696473  水生根茎类 2020-07-01    4.850   512.5522  306.94498  0.669850   63.287625[6474 rows x 7 columns]
+
+ts.set_index(&#x27;销售日期&#x27;, inplace=True)ts.sort_index(inplace=True)
+
+ts.sort_index(inplace=True)ts = ts[(ts[goal] &gt; ts[goal].quantile(0.1)) &amp; (ts[goal] &lt; ts[goal].quantile(0.9))]Energy_sources = ts.groupby(&#x27;分类名称&#x27;) #对排放数据进行分组rcParams[&#x27;figure.figsize&#x27;] = 28, 18
+
+# Energy_sources = ts.groupby(&#x27;分类名称&#x27;) #对排放数据进行分组# rcParams[&#x27;figure.figsize&#x27;] = 28, 18# fig, ax = plt.subplots()# for desc, group in Energy_sources:#     group.plot(y = goal, label = desc,ax = ax,fontsize = 25)#     ax.set_xlabel(u&#x27;时间（月）&#x27;)#     ax.set_ylabel(goal)#     ax.title.set_size(28)#     ax.xaxis.label.set_size(25)#     ax.yaxis.label.set_size(25)#     ax.legend(loc = &#x27;best&#x27;, fontsize = 18)
+
+# fig, axes = plt.subplots(3,2, figsize = (30, 20))# for (desc, group), ax in zip(Energy_sources, axes.flatten()):#     group.plot(y = goal,ax = ax, title = desc, fontsize = 25)#     ax.set_xlabel(&#x27;时间&#x27;)#     ax.set_ylabel(u&#x27;分类名称&#x27;)#     ax.xaxis.label.set_size(23)#     ax.yaxis.label.set_size(23)
+
+ts_grouped = ts.groupby(&#x27;分类名称&#x27;)ts_classname = ts_grouped.get_group(classname)print(ts_classname)
+
+分类名称    当日销量     当日销售额      当日成本价       利润率  批发价格(元/千克)销售日期2020-07-01  食用菌  35.365  724.4486  472.95274  0.531757   13.3734692020-07-02  食用菌  48.510  892.2476  625.13641  0.427285   12.8867532020-07-03  食用菌  42.442  116.4720   80.24844  0.451393    1.8907792020-07-04  食用菌  47.262  681.1420  479.78820  0.419672   10.1516692020-07-05  食用菌  73.213  515.2890  383.55412  0.343458    5.238880...         ...     ...       ...        ...       ...         ...2023-06-25  食用菌  35.271  592.5300  391.81200  0.512281   11.1086162023-06-27  食用菌  38.708  759.9902  408.05555  0.862467   10.5418922023-06-28  食用菌  53.742  176.8180  144.72835  0.221723    2.6930212023-06-29  食用菌  48.314  368.6020  229.94141  0.603026    4.7593122023-06-30  食用菌  39.572   70.2838   44.78568  0.569336    1.131752[974 rows x 6 columns]
+
+import pandas as pdmte = ts_classname[goal]mte = mte.fillna(0)print(mte)
+
+销售日期2020-07-01    13.3734692020-07-02    12.8867532020-07-03     1.8907792020-07-04    10.1516692020-07-05     5.238880                ...2023-06-25    11.1086162023-06-27    10.5418922023-06-28     2.6930212023-06-29     4.7593122023-06-30     1.131752Name: 批发价格(元/千克), Length: 974, dtype: float64
+
+# 对mte作n阶差分，并作图n = 1  # 阶数diff_mte = mte.diff(n)diff_mte.plot(figsize=(12, 6))plt.xlabel(&#x27;时间&#x27;)plt.ylabel(&#x27;差分值&#x27;)plt.title(&#x27;mte的&#123;&#125;阶差分&#x27;.format(n))plt.show()
+
+
+# adfuller单位根检验数据平稳性from statsmodels.tsa.stattools import adfullerprint(adfuller(mte))  # 原始数据diff_mte = mte.diff(1)diff_mte = diff_mte.fillna(0)print(adfuller(diff_mte))  # 一阶差分diff_mte = mte.diff(2)diff_mte = diff_mte.fillna(0)print(adfuller(diff_mte))  # 二阶差分
+
+(-3.5123330642834665, 0.0076759468952771045, 22, 951, &#123;&#x27;1%&#x27;: -3.4372448882473177, &#x27;5%&#x27;: -2.86458394997689, &#x27;10%&#x27;: -2.5683907715382888&#125;, 5430.473818612123)(-11.303446954655314, 1.2904956838904833e-20, 20, 953, &#123;&#x27;1%&#x27;: -3.4372303791313144, &#x27;5%&#x27;: -2.864577551835195, &#x27;10%&#x27;: -2.568387363624452&#125;, 5440.881609824835)(-10.100507945721994, 1.0625845001080854e-17, 21, 952, &#123;&#x27;1%&#x27;: -3.437237626048241, &#x27;5%&#x27;: -2.8645807475403657, &#x27;10%&#x27;: -2.56838906578808&#125;, 5453.993133667267)
+
+
+
+
+
+lb_stat
+lb_pvalue
+
+
+
+1
+13.264556
+2.704715e-04
+
+
+2
+15.336045
+4.675415e-04
+
+
+3
+77.194434
+1.226578e-16
+
+
+4
+78.470120
+3.673116e-16
+
+
+5
+127.710337
+7.284033e-26
+
+
+6
+350.755828
+1.062214e-72
+
+
+7
+350.779129
+8.392901e-72
+
+
+8
+354.785547
+8.616264e-72
+
+
+9
+382.005900
+9.428833e-77
+
+
+10
+386.841863
+5.931807e-77
+
+
+11
+415.452323
+3.198840e-82
+
+
+12
+486.177152
+1.934649e-96
+
+
+13
+486.845405
+9.088943e-96
+
+
+14
+491.997637
+4.602727e-96
+
+
+15
+507.631055
+1.373325e-98
+
+
+16
+517.769707
+5.873673e-100
+
+
+17
+543.420004
+1.313874e-104
+
+
+18
+579.755892
+1.628993e-111
+
+
+19
+580.760929
+5.765443e-111
+
+
+20
+588.684037
+6.953955e-112
+
+
+# # 画pacf图和acf图# from statsmodels.graphics.tsaplots import plot_acf, plot_pacf# pacf = plot_pacf(diff_mte, lags=40)# plt.title(&#x27;PACF&#x27;)# pacf.show()# acf = plot_acf(diff_mte, lags=40)# plt.title(&#x27;ACF&#x27;)# acf.show()
+
+# # 这里 max_ 数字越大运行时间越长，这里取8运行时间为 13m 13s# train_results = sm.tsa.arma_order_select_ic(diff_mte, ic=[&#x27;aic&#x27;, &#x27;bic&#x27;], trend=&#x27;c&#x27;, max_ar=8, max_ma=8)# print(&#x27;AIC&#x27;, train_results.aic_min_order)# print(&#x27;BIC&#x27;, train_results.bic_min_order)
+
+from statsmodels.tsa.arima.model import ARIMA# ARIMA(data, order=(p, d, q))model = ARIMA(diff_mte, order=(6,2,4))   #经过模型验证，取q=6,p=2为arima的取值result = model.fit()result.summary()
+
+SARIMAX Results
+| Dep. Variable: | 批发价格(元&#x2F;千克) | No. Observations: | 974 || Model: | ARIMA(6, 2, 4) | Log Likelihood | -2809.138 || Date: | Sat, 09 Sep 2023 | AIC | 5640.277 || Time: | 18:14:10 | BIC | 5693.950 || Sample: | 0 | HQIC | 5660.704 ||  | - 974 |  |  || Covariance Type: | opg |  |  |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+coef
+std err
+z
+P&gt;
+z
+
+
+
+ar.L1
+-1.8373
+0.052
+-35.602
+0.000
+-1.938
+-1.736
+
+
+ar.L2
+-1.7422
+0.070
+-25.023
+0.000
+-1.879
+-1.606
+
+
+ar.L3
+-1.5266
+0.078
+-19.472
+0.000
+-1.680
+-1.373
+
+
+ar.L4
+-1.3134
+0.075
+-17.574
+0.000
+-1.460
+-1.167
+
+
+ar.L5
+-1.0602
+0.064
+-16.448
+0.000
+-1.187
+-0.934
+
+
+ar.L6
+-0.3846
+0.038
+-10.176
+0.000
+-0.459
+-0.311
+
+
+ma.L1
+-0.0594
+0.051
+-1.172
+0.241
+-0.159
+0.040
+
+
+ma.L2
+-1.9379
+0.047
+-40.987
+0.000
+-2.031
+-1.845
+
+
+ma.L3
+0.0592
+0.050
+1.184
+0.237
+-0.039
+0.157
+
+
+ma.L4
+0.9383
+0.047
+20.089
+0.000
+0.847
+1.030
+
+
+sigma2
+18.3853
+0.845
+21.760
+0.000
+16.729
+20.041
+
+
+
+
+
+
+
+
+
+
+
+
+Ljung-Box (L1) (Q):
+0.04
+Jarque-Bera (JB):
+70.04
+
+
+Prob(Q):
+0.85
+Prob(JB):
+0.00
+
+
+Heteroskedasticity (H):
+0.91
+Skew:
+0.44
+
+
+Prob(H) (two-sided):
+0.40
+Kurtosis:
+3.98
+
+
+Warnings:[1] Covariance matrix calculated using the outer product of gradients (complex-step).
+import pandas as pdimport statsmodels.api as sm# 提取关键信息summary = result.summary()  # 获取结果的概要信息params = result.params  # 获取模型参数resid = result.resid  # 获取残差fitted_values = result.fittedvalues  # 获取拟合值# 创建一个 DataFramedf = pd.DataFrame(&#123;    &#x27;Summary&#x27;: [summary],    &#x27;Parameters&#x27;: [params],    &#x27;Residuals&#x27;: [resid],    &#x27;Fitted Values&#x27;: [fitted_values]&#125;)import osif not os.path.exists(&#x27;arima result&#x27;):    os.makedirs(&#x27;arima result&#x27;)# 将数据存储到 Excel 文件filename = &#x27;arima result&#x27; + &#x27;/&#x27; + classname +&#x27;model&#x27;+ &#x27;.xlsx&#x27;df.to_excel(filename, index=False)print(&quot;ARIMA 结果已成功保存到 Excel 文件：&quot;, filename)
+
+ARIMA 结果已成功保存到 Excel 文件： arima result/食用菌model.xlsx
+
+# # 获取残差# resid = result.resid# # 画qq图# from statsmodels.graphics.api import qqplot# qqplot(resid, line=&#x27;q&#x27;, fit=True)# plt.show()
+
+from scipy.stats import shapiroshapiro(resid)
+
+ShapiroResult(statistic=0.9777379631996155, pvalue=4.7044611262148095e-11)
+
+import statsmodels.api as smprint(sm.stats.durbin_watson(resid.values))
+
+2.002641556155693
+
+# 预测出来的数据也为一阶差分# predict(起始时间，终止时间)predict = result.predict(&#x27;2020-07-01&#x27;,&#x27;2023-06-30&#x27;)plt.figure(figsize=(12, 8))plt.plot(diff_mte)plt.plot(predict)
+
+[&lt;matplotlib.lines.Line2D at 0x281ab771248&gt;]
+
+
+# 根据result，使用得到的arima模型预测未来7天的差分值，并且恢复原值forecast_diff = result.forecast(steps=7)print(forecast_diff)forecast = mte.iloc[-1] + forecast_diff.cumsum()print(forecast)
+
+974    1.130631975    8.002398976    0.088760977   -4.959126978   -1.411014979   -0.556519980    1.472372Name: predicted_mean, dtype: float64974     2.262383975    10.264781976    10.353540977     5.394414978     3.983400979     3.426881980     4.899254Name: predicted_mean, dtype: float64
+
+# Save the result to an xlsx fileimport osif not os.path.exists(&#x27;arima result&#x27;):    os.makedirs(&#x27;arima result&#x27;)filename = &#x27;arima result&#x27; + &#x27;/&#x27; + classname +&#x27;result&#x27;+ &#x27;.xlsx&#x27;forecast.to_excel(filename, index=False)print(&quot;ARIMA 结果已成功保存到 Excel 文件：&quot;, filename)
+
+ARIMA 结果已成功保存到 Excel 文件： arima result/食用菌result.xlsx
+
+
+原文作者：kalipolis。许可：CC BY-NC-SA 3.0 CN。
+
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>blog</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>关于这个个人博客</title>
+    <url>//2023/09/13/my-first-blog/</url>
+    <content><![CDATA[
+
+打开网易云歌单
+
+项目简介
+大三闲来无事打算搭个个人网站来装13，部署动态网站需要云服务器，一年三百多，由于腾讯云的新人优惠已经贡献给了我们的大创了（哭啊），考虑到我的技术能力和需求，于是我采取折中方法，使用hexo框架搭配gitee的下级域名避开网站备案，搭建了免费的静态网站，也算是我的个人博客。
+hexo框架介绍：hexo帮助文档
+下面这个视频可以简要介绍搭建个人博客的过程，但是不建议直接参考执行（都是我踩过的坑www），由于各种框架版本更新的原因，请仔细查阅官方文档学习。
+
+在搭建这个博客的过程中，我学习了hexo框架和markdown语法，使用了部分html与js知识，最终完成了整个部分的搭建
+使用了kira这个主题：kira帮助文档，该作者也基于这个主题搭建了自己的个人博客：德布罗煜的个人网站，再次感谢主题作者，Ciallo～(∠・ω&lt; )⌒★
+小幅修改了这个主题作者的源码，实现了部分没有集成的功能
+其基于Nexmoe这个主题库进行了扩展：Nexmoe帮助文档。如果你想像我一样搭建这个个人博客，请结合两篇帮助文档一起看，会有很大帮助。
+markdown语法使用vscode中的Office Viewer插件，进行实时编辑预览。
+最后上传到gitee中：Gitee Pages
+live2d模型插件：hexo-helper-live2d 为什么只支持moc不支持moc3啊啊啊啊
+左侧矢量图标添加：阿里巴巴矢量库，如果你不知道如何合并自己的图标和本项目源码所带图标，这个链接或许可以帮到你：网站链接
+评论插件：gitalk,需要登陆github使用
+把以前写的部分帖子和部分代码发了过来，但是本人是个三分钟热度的懒狗，后续不定期更新
+本项目中的所有头图集合在项目中的img文件夹，大家可以自行下载取用，这里大部分动漫头图下载自wallhaven，给大家安利一波
+
+鸣谢
+郭同学协助我进行的gitee身份认证拍照，任爷提供的github项目demo部署指导
+十分感谢浏览我的网站，如果你对我的网站有任何想法和意见，由于我这个是静态网站，没有后端数据库，目前只集成了gitalk插件进行评论，需要登陆github账号进行操作，对部分同学比较麻烦，不过你可以去我的gitee项目主页提交issue来提供建议，或是通过左边我的联系方式联系我💗
+
+声明
+本博客中的内容，除非另有标注，否则均为本人所创或本人参与创作，如果引用本博客内容，请注明来源
+
+
+原文作者：kalipolis。许可：CC BY-NC-SA 3.0 CN。
+
+]]></content>
+      <categories>
+        <category>关于本项目</category>
+      </categories>
+      <tags>
+        <tag>blog</tag>
+        <tag>markdown</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>sovit-4.0 合成音乐模型</title>
+    <url>//2023/09/13/sovit-4-0-%E5%90%88%E6%88%90%E9%9F%B3%E4%B9%90%E6%A8%A1%E5%9E%8B/</url>
+    <content><![CDATA[
+Sovits模型介绍
+So-vits-svc（也称Sovits）是由是中国民间歌声合成爱好者Rcell基于VITS、soft-vc、VISinger2等一系列项目开发的一款开源免费AI语音转换软件，通过SoftVC内容编码器提取源音频语音特征，与F0同时输入VITS替换原本的文本输入达到歌声转换的效果
+介绍视频（关注这个up谢谢喵😋）：
+
+
+
+具体使用方法视频中已经写的很清楚了，这里讲一下我使用此模型的经验：
+训练集起码需要20分钟才能有相对比较好的效果
+参数中可以调整每多少个epoch输出一次模型，如果你的数据集过小，请把输出的epoch数也改小（比如调成200），防止过拟合
+这个模型跑的真的很慢，并且很耗算力，碰到迟迟不输出不要着急，等一会再看看有没有输出结果
+数据集过小非常容易过拟合，如果你的数据集只有5~10分钟，那么epoch为200时效果应该是最好的，请感谢强大的底模
+最好部署在云端跑项目，现行电脑跑这个模型是比较吃力的
+
+
+大家可以用这个网站体验一下Sovits模型的效果：网站链接，传入20s内的音频，可以转成网站内置的角色音色不要问为什么都是赛马娘角色
+我利用这个模型训练了一个高桥李依的音色，训练集1小时，800epoch
+
+
+
+可以听出很明显的李依李个人音色，但是训练效果算不上好，主要是当时模型刚刚出来，没有均值滤波等功能，容易出现气声，加上我epoch确实跑的太少了，后续羽毛布团大佬经过改进，我们已经可以完成不错的声音训练了
+我使用一个同学的几段录音文稿，数据集7分钟左右，训练了200epoch的模型，并套在春物主题曲上，使用au和原声合成这位同学很满意
+
+
+
+在数据集较小的情况下，不要训练太多次数，7~8轮已经很够了，不然你会听到大量的电音中国有嘻哈
+
+
+原文作者：kalipolis。许可：CC BY-NC-SA 3.0 CN。
+
+]]></content>
+      <categories>
+        <category>整活</category>
+      </categories>
+      <tags>
+        <tag>blog</tag>
+        <tag>sovit</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>个人番剧tier list top10</title>
+    <url>//2023/09/13/%E4%B8%AA%E4%BA%BA%E7%95%AA%E5%89%A7tier-list-top10/</url>
+    <content><![CDATA[
+我的bangumi账号：点此跳转，收录了我目前看过的大部分番剧
+排名仅代表个人拙见，意见和我不一样就是我sb
+10.小林家的龙女仆点此跳转番剧介绍
+打开网易云歌单
+
+如果有人问我刚开始看番看哪部，我永远优先推荐这部，引人入胜而不失深度
+
+9.街角魔族 2丁目点此跳转番剧介绍
+打开网易云歌单
+
+设定太有趣了，演出也十分出色，虾米口的超高语速配上momo的反差萌，以及十分值得推敲的剧情，很棒的日常番
+
+8.辉夜大小姐想让我告白-超级浪漫-点此跳转番剧介绍
+打开网易云歌单
+
+演出真的神仙，演出创意性上我认为甚至超过孤独摇滚，每集都有新惊喜
+
+7.日常点此跳转番剧介绍
+打开网易云歌单
+
+绝对电波番看不下去不要骂我，看过的最好笑的搞笑番
+
+6.孤独摇滚！点此跳转番剧介绍
+打开网易云歌单
+
+兼具搞笑，深度和演出，本质王道热血（？），平凡的人合在一起做不平凡的事真的很让人动容
+
+5.我心里危险的东西点此跳转番剧介绍
+打开网易云歌单
+
+男女主细节把握的演出实在太细节了贴吧Q群高强度分析，除开甜的部分，甚至可以当悬疑番看（），丰富清新的音乐冲淡了部分下头环节，给人极强的沉浸感，还有巨好听的oped，夜鹿真的强
+
+4.CLANNAD 〜AFTER STORY〜点此跳转番剧介绍
+打开网易云歌单
+
+cl我补挺晚的，但是我只能说不被剧透不开弹幕补完全番绝对值得
+
+3.赛马娘 Pretty Derby 第二季点此跳转番剧介绍
+打开网易云歌单
+
+看过最棒的王道热血故事，尤其喜欢第10集的双涡轮二踢脚，那一段真的十分感人
+
+2.轻音少女 第二季点此跳转番剧介绍
+打开网易云歌单
+
+mother f**king tea,永远的白月光，为什么一个日常番我能看哭，山田尚子yyds
+
+1.擅长捉弄的高木同学 第三季点此跳转番剧介绍
+打开网易云歌单
+
+虽然是正统恋爱番，互动极甜又十分自然让人看得在床上扭，但对我来说最大的吸引力是它营造的美好氛围，其魅力类似相合之物，每次点开一集，都能由衷地被这个世界的美好所打动
+
+
+原文作者：kalipolis。许可：CC BY-NC-SA 3.0 CN。
+
+]]></content>
+      <categories>
+        <category>番剧</category>
+      </categories>
+      <tags>
+        <tag>blog</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>基于 3D 卷积神经网络(CNN)的阿尔兹海默智能诊断 Web 应用</title>
+    <url>//2023/09/13/%E5%9F%BA%E4%BA%8E-3D-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-CNN-%E7%9A%84%E9%98%BF%E5%B0%94%E5%85%B9%E6%B5%B7%E9%BB%98%E6%99%BA%E8%83%BD%E8%AF%8A%E6%96%AD-Web-%E5%BA%94%E7%94%A8/</url>
+    <content><![CDATA[
+Image_Recognition_WebGUI我们组的大创项目的初步成果任爷大c✨ 基于 3D 卷积神经网络和 ADNI 数据集的阿尔兹海默智能诊断 Web 应用：AI 人工智能图像识别-Pytorch；可视化 Web 图形界面-Pywebio； nii 医学影像识别。100%纯 Python
+项目地址：点此跳转
+轻量化版本链接 包含模型训练代码
+功能简介
+1, 根据脑部 MRI 医学影像智能诊断阿尔兹海默病
+2, 绘制参数相关性热力图
+3, 使用纯 python 编写，轻量化，易复现，易部署
+4, 代码可读性高，核心部分有极详细注释
+
+界面展示
+进入 web 界面
+点击”使用 demo.nii”，可以使用默认的 demo 图像测试识别功能
+也可以自己上传医学影像
+点击”查看图像”，渲染参数热力图
+根据上传的图像，生成参数相关性热力图
+
+如何使用python 版本 3.9
+需要 8GB 以上内存
+先安装依赖
+pip install -r requirement.txt
+
+demo01.py 是项目入口，运行此文件即可启动服务器
+python demo01.py
+
+复制链接到浏览器打开点击”Demo“即可进入 Web 界面
+之后，可以点击“使用 demo.nii”使用默认的测试样例。也可以点击“上传.nii”，选择 readme_static&#x2F;test 文件夹内不同类别的图像文件上传测试
+项目结构└─Image_Recognition_WebGUI    ├─data    │  └─model_save    ├─imgs    │  ├─img_hot    │  ├─img_merge    │  └─img_raw    ├─nii    ├─readme_static    │  ├─readme_img    │  └─test    │      ├─AD    │      ├─CN    │      ├─EMCI    │      ├─LMCI    │      └─MCI    └─run_logs
+
+
+data 文件夹存放部分静态资源，其中的 model_save 文件夹存放训练好的模型
+imgs 文件夹存放渲染的图片
+nii 文件夹存放用户上传的医学影像数据
+readme_static 存放 readme 文档中用的静态资源
+readme_static&#x2F;test 文件夹内存放了一些五个类别的影像文件，可用于测试
+run_logs 存放用户访问日志
+
+分类器核心代码from torch import nnimport torchclass ClassificationModel3D(nn.Module):    &quot;&quot;&quot;分类器模型&quot;&quot;&quot;    def __init__(self, dropout=0.4, dropout2=0.4):        nn.Module.__init__(self)        # 定义四个Conv3d层        self.Conv_1 = nn.Conv3d(1, 8, 3)  # 输入通道数为1，输出通道数为8，卷积核大小为3x3x3        self.Conv_2 = nn.Conv3d(8, 16, 3)  # 输入通道数为8，输出通道数为16，卷积核大小为3x3x3        self.Conv_3 = nn.Conv3d(16, 32, 3)  # 输入通道数为16，输出通道数为32，卷积核大小为3x3x3        self.Conv_4 = nn.Conv3d(32, 64, 3)  # 输入通道数为32，输出通道数为64，卷积核大小为3x3x3        # 定义四个BatchNorm3d层，每个卷积层后面跟着一个BatchNorm3d层        self.Conv_1_bn = nn.BatchNorm3d(8)        self.Conv_2_bn = nn.BatchNorm3d(16)        self.Conv_3_bn = nn.BatchNorm3d(32)        self.Conv_4_bn = nn.BatchNorm3d(64)        # 定义四个MaxPool3d层，每个卷积层后面跟着一个MaxPool3d层        self.Conv_1_mp = nn.MaxPool3d(2)  # 池化核大小为2        self.Conv_2_mp = nn.MaxPool3d(3)  # 池化核大小为3        self.Conv_3_mp = nn.MaxPool3d(2)  # 池化核大小为2        self.Conv_4_mp = nn.MaxPool3d(3)  # 池化核大小为3        # 定义两个全连接层        self.dense_1 = nn.Linear(4800, 128)  # 输入维度为4800，输出维度为128        self.dense_2 = nn.Linear(128, 5)  # 输入维度为128，输出维度为5。因为这是一个五分类问题，所以最终需要输出维度为5        # 定义ReLU激活函数和dropout层        self.relu = nn.ReLU()        self.dropout = nn.Dropout(dropout)  # 防止过拟合        self.dropout2 = nn.Dropout(dropout2)  # 增强鲁棒性    def forward(self, x):        # 第一层卷积层        x = self.relu(self.Conv_1_bn(self.Conv_1(x)))        &quot;&quot;&quot;        这行代码是对输入 x 进行卷积、批归一化和 ReLU 激活函数的操作。        self.Conv_1(x) 对输入 x 进行 3D 卷积操作，输出一个特征图。        self.Conv_1_bn(...) 对卷积输出的特征图进行批归一化操作，得到归一化后的特征图。        self.relu(...) 对归一化的特征图进行 ReLU 激活函数操作，得到激活后的特征图。        整个操作的作用是提取输入 x 中的特征，并将其非线性化，使得网络能够更好地学习这些特征。这里使用了批归一化的技术，可以加速模型的训练过程并提高模型的泛化能力。最终得到的输出结果是经过卷积、批归一化和 ReLU 激活函数处理后的特征图 x。        &quot;&quot;&quot;        # 第一层卷积层的最大池化        x = self.Conv_1_mp(x)        &quot;&quot;&quot;        这行代码是对输入 x 进行最大池化操作，将特征图的大小缩小一半。        self.Conv_1_mp(...) 对输入 x 进行最大池化操作，池化核大小为 2。        池化操作会将特征图中每个池化窗口内的最大值提取出来，作为输出特征图的对应位置的值，从而将特征图的大小缩小一半。        最大池化操作可以帮助网络实现空间不变性，使得网络在输入发生轻微变化时仍能识别出相同的特征。在这个模型中，经过最大池化后的特征图 x 会传递到下一层卷积层中进行特征提取和非线性化处理。        &quot;&quot;&quot;        # 第二层卷积层        x = self.relu(self.Conv_2_bn(self.Conv_2(x)))        # 第二层卷积层的最大池化        x = self.Conv_2_mp(x)        # 第三层卷积层        x = self.relu(self.Conv_3_bn(self.Conv_3(x)))        # 第三层卷积层的最大池化        x = self.Conv_3_mp(x)        # 第四层卷积层        x = self.relu(self.Conv_4_bn(self.Conv_4(x)))        # 第四层卷积层的最大池化        x = self.Conv_4_mp(x)        # 将张量展平为一维向量        x = x.view(x.size(0), -1)        &quot;&quot;&quot;        这行代码是将输入张量 x 展平为一维向量。        x.size(0) 得到输入张量 x 的第一个维度的大小，也就是张量的批次大小。        -1 表示将第二个维度及其后面的所有维度展平为一维。        x.view(...) 对输入张量 x 进行形状变换，将其展平为一维向量。        这个操作的作用是将经过卷积和池化处理后的特征图 x 变为一维向量，以便于传递到全连接层进行分类或回归等任务。展平后的向量大小为 (batch_size, num_features)，其中 batch_size 是输入张量的批次大小，num_features 是展平后的向量元素个数，也就是经过卷积和池化处理后的特征数量。        &quot;&quot;&quot;        # dropout层        x = self.dropout(x)        &quot;&quot;&quot;        这行代码是对输入张量 x 进行 dropout 操作，即以一定概率将输入张量中的部分元素置为零。        self.dropout(...) 对输入张量 x 进行 dropout 操作，丢弃概率为 dropout。        dropout 操作会以一定概率将输入张量中的部分元素置为零，从而达到随机失活的目的。这样做可以减少过拟合，增强模型的泛化能力。        在这个模型中，dropout 操作被应用在全连接层之前，可以帮助模型更好地学习到数据的特征，防止过拟合。最终得到的 x 张量是经过 dropout 操作后的结果，会传递到下一层全连接层进行处理。        &quot;&quot;&quot;        # 全连接层1        x = self.relu(self.dense_1(x))        &quot;&quot;&quot;        这行代码是对输入张量 x 进行全连接操作，并应用 ReLU 激活函数。        self.dense_1(x) 对输入张量 x 进行全连接操作，将其映射到大小为 128 的特征空间中。        self.relu(...) 对全连接层的输出进行 ReLU 激活函数操作，得到激活后的特征向量。        在这个模型中，全连接层的作用是将经过卷积、池化和 dropout 处理后的特征向量映射到一个新的特征空间中，以便于进行分类或回归等任务。ReLU 激活函数的作用是对特征向量进行非线性化处理，使得网络能够更好地学习到数据中的非线性相关性。最终得到的 x 张量是经过全连接层和 ReLU 激活函数处理后的结果，会传递到下一层 dropout 层进行处理。        &quot;&quot;&quot;        # dropout2层        x = self.dropout2(x)        # 全连接层2        x = self.dense_2(x)        # 返回输出结果        return xif __name__ == &quot;__main__&quot;:    # 创建一个 ClassificationModel3D 类的实例 model，即创建一个 3D 图像分类模型    model = ClassificationModel3D()    # 创建一个形状为 (1, 1, 166, 256, 256) 的测试张量 test_tensor，    # 其中 1 表示批次大小，1 表示输入通道数，166、256 和 256 分别表示输入数据的深度、高度和宽度    test_tensor = torch.ones(1, 1, 166, 256, 256)    # 对测试张量 test_tensor 进行前向传递，得到模型的输出结果 output    output = model(test_tensor)    # 打印输出结果的形状，即 (batch_size, num_classes)，其中 batch_size 是测试张量的批次大小，num_classes 是分类任务的类别数    print(output.shape)
+
+ref: https://github.com/moboehle/Pytorch-LRP
+数据集:https://adni.loni.usc.edu
+开源许可证此翻译版本仅供参考，以 LICENSE 文件中的英文版本为准
+MIT 开源许可证：
+版权所有 (c) 2023 bytesc
+特此授权，免费向任何获得本软件及相关文档文件（以下简称“软件”）副本的人提供使用、复制、修改、合并、出版、发行、再许可和&#x2F;或销售软件的权利，但须遵守以下条件：
+上述版权声明和本许可声明应包含在所有副本或实质性部分中。
+本软件按“原样”提供，不作任何明示或暗示的保证，包括但不限于适销性、特定用途适用性和非侵权性。在任何情况下，作者或版权持有人均不对因使用本软件而产生的任何索赔、损害或其他责任负责，无论是在合同、侵权或其他方面。
+
+原文作者：kalipolis。许可：CC BY-NC-SA 3.0 CN。
+
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>blog</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>洛谷部分代码展示</title>
+    <url>//2023/09/13/%E6%B4%9B%E8%B0%B7%E9%83%A8%E5%88%86%E4%BB%A3%E7%A0%81%E5%90%88%E8%AE%A1/</url>
+    <content><![CDATA[
+
+集合了我洛谷不看题解通过部分题目的代码我的实力也就这样了😩，贴心写了较为详细的中文注释，供各位学习思路
+我的洛谷账号（现在基本不用了）：点此跳转
+由于我在hexo没有找到可用的插件对latex公式的支持，下方的变量显示会有问题，如果对公式有疑问，建议点击题目链接跳转阅读
+P1450 [HAOI2008] 硬币购物
+
+[HAOI2008] 硬币购物题目描述共有 $4$ 种硬币。面值分别为 $c_1,c_2,c_3,c_4$。
+某人去商店买东西，去了 $n$ 次，对于每次购买，他带了 $d_i$ 枚 $i$ 种硬币，想购买 $s$ 的价值的东西。请问每次有多少种付款方法。
+输入格式输入的第一行是五个整数，分别代表 $c_1,c_2,c_3,c_4, n$。
+接下来 $n$ 行，每行有五个整数，描述一次购买，分别代表 $d_1, d_2, d_3, d_4,s$。
+输出格式对于每次购买，输出一行一个整数代表答案。
+样例 #1样例输入 #11 2 5 10 23 2 3 1 101000 2 2 2 900
+
+样例输出 #1427
+
+提示数据规模与约定
+对于 $100%$ 的数据，保证 $1 \leq c_i, d_i, s \leq 10^5$，$1 \leq n \leq 1000$。
+
+#include&lt;bits/stdc++.h&gt;using namespace std;int c[5]; // 硬币面值int d[5]; // 每种硬币数量long long ans[100000+10]; // 动态规划数组long long ff(int a)&#123;	if(a&lt;0)		return 0;	else		return ans[a];&#125;int main() &#123;	int n;	cin&gt;&gt;c[1]&gt;&gt;c[2]&gt;&gt;c[3]&gt;&gt;c[4]&gt;&gt;n; // 输入硬币面值和购买次数	for(int i=1;i&lt;=n;i++)&#123;		int goal;		cin&gt;&gt;d[1]&gt;&gt;d[2]&gt;&gt;d[3]&gt;&gt;d[4]&gt;&gt;goal; // 输入每次购买的硬币数量和目标价值		memset(ans,0,sizeof(ans)); // 初始化动态规划数组		ans[0]=1; // 初始值		// 动态规划计算付款方法		for(int j=1;j&lt;=4;j++)&#123;			for(int s=0;s&lt;=goal-c[j];s++)&#123;				ans[s+c[j]]+=ans[s];			&#125;		&#125;		// 计算不同付款方式的数量		long long g[5];		for(int j=1;j&lt;=4;j++)&#123;			g[j]=(long long)(d[j]+1)*c[j];		&#125;		long long da[6];		da[1]=ff(goal);		da[2]=ff(goal-g[1])+ff(goal-g[2])+ff(goal-g[3])+ff(goal-g[4]);		da[3]=ff(goal-g[1]-g[2])+ff(goal-g[1]-g[3])+ff(goal-g[1]-g[4])+ff(goal-g[2]-g[3])+ff(goal-g[2]-g[4])+ff(goal-g[3]-g[4]);		da[4]=ff(goal-g[1]-g[2]-g[3])+ff(goal-g[1]-g[4]-g[3])+ff(goal-g[1]-g[2]-g[4])+ff(goal-g[4]-g[2]-g[3]);		da[5]=ff(goal-g[1]-g[2]-g[3]-g[4]);		cout&lt;&lt;da[1]-da[2]+da[3]-da[4]+da[5]&lt;&lt;endl; // 输出答案	&#125;&#125;
+
+
+P2024 [NOI2001] 食物链
+
+[NOI2001] 食物链题目描述动物王国中有三类动物 $A,B,C$，这三类动物的食物链构成了有趣的环形。$A$ 吃 $B$，$B$ 吃 $C$，$C$ 吃 $A$。
+现有 $N$ 个动物，以 $1 \sim N$ 编号。每个动物都是 $A,B,C$ 中的一种，但是我们并不知道它到底是哪一种。
+有人用两种说法对这 $N$ 个动物所构成的食物链关系进行描述：
+
+第一种说法是 1 X Y，表示 $X$ 和 $Y$ 是同类。
+第二种说法是 2 X Y，表示 $X$ 吃 $Y$。
+
+此人对 $N$ 个动物，用上述两种说法，一句接一句地说出 $K$ 句话，这 $K$ 句话有的是真的，有的是假的。当一句话满足下列三条之一时，这句话就是假话，否则就是真话。
+
+当前的话与前面的某些真的话冲突，就是假话；
+当前的话中 $X$ 或 $Y$ 比 $N$ 大，就是假话；
+当前的话表示 $X$ 吃 $X$，就是假话。
+
+你的任务是根据给定的 $N$ 和 $K$ 句话，输出假话的总数。
+输入格式第一行两个整数，$N,K$，表示有 $N$ 个动物，$K$ 句话。
+第二行开始每行一句话（按照题目要求，见样例）
+输出格式一行，一个整数，表示假话的总数。
+样例 #1样例输入 #1100 71 101 12 1 22 2 32 3 31 1 32 3 11 5 5
+
+样例输出 #13
+
+提示对于全部数据，$1\le N\le 5 \times 10^4$，$1\le K \le 10^5$。
+#include&lt;bits/stdc++.h&gt;using namespace std;typedef long long ll;#define N 50000int bing[150000+1]; // 用于记录食物链关系// 查找操作，返回节点的根节点int find(int a)&#123;	if(bing[a]==a)		return a;	else		return find(bing[a]);&#125;// 合并操作，将两个节点所在的集合合并void hebing(int a,int b)&#123;	int x=find(a),y=find(b);	bing[x]=y;&#125;int main() &#123;	for(int i=1;i&lt;=150001;i++)&#123;		bing[i]=i;	&#125;	int n,k;	cin&gt;&gt;n&gt;&gt;k; // 输入动物数量和句子数量	int a,b,c;	int ans=0;	for(int i=1;i&lt;=k;i++)&#123;		cin&gt;&gt;a&gt;&gt;b&gt;&gt;c; // 输入每句话的描述		if(b&gt;n||c&gt;n)&#123;			ans++;			continue;		&#125;		if(a==1)&#123; // 第一种说法：X和Y是同类			if(find(b+N)==find(c)||find(b+2*N)==find(c))&#123;				ans++; // 与前面的真话冲突，为假话				continue;			&#125;			else &#123;				hebing(b,c); // 合并同类关系				hebing(b+N,c+N);				hebing(b+2*N,c+2*N);			&#125;		&#125;		if(a==2)&#123; // 第二种说法：X吃Y			if(b==c)&#123;				ans++; // X吃X，为假话				continue;			&#125;			if(find(b)==find(c)||find(b)==find(c+2*N))&#123;				ans++; // 与前面的真话冲突，为假话				continue;			&#125;			else&#123;				hebing(b,c+N); // 建立吃食关系				hebing(b+N,c+2*N);				hebing(b+2*N,c);			&#125;		&#125;	&#125;	cout&lt;&lt;ans; // 输出假话数量&#125;
+
+
+P2148 [SDOI2009] E&amp;D
+
+[SDOI2009] E&amp;D题目描述小 E 与小 W 进行一项名为 E&amp;D 游戏。
+游戏的规则如下：桌子上有 $2n$ 堆石子，编号为 $1 \sim 2n$。其中，为了方便起见，我们将第 $2k-1$ 堆与第 $2k$ 堆（$1 \le k \le n$）视为同一组。第 $i$ 堆的石子个数用一个正整数 $S_i$ 表示。
+一次分割操作指的是，从桌子上任取一堆石子，将其移走。然后分割它同一组的另一堆石子，从中取出若干个石子放在被移走的位置，组成新的一堆。操作完成后，所有堆的石子数必须保证大于 $0$。显然，被分割的一堆的石子数至少要为 $2$。两个人轮流进行分割操作。如果轮到某人进行操作时，所有堆的石子数均为 $1$，则此时没有石子可以操作，判此人输掉比赛。
+小 E 进行第一次分割。他想知道，是否存在某种策略使得他一定能战胜小 W。因此，他求助于小 F，也就是你，请你告诉他是否存在必胜策略。例如，假设初始时桌子上有 $4$ 堆石子，数量分别为 $1,2,3,1$。小 E 可以选择移走第 $1$ 堆，然后将第 $2$ 堆分割（只能分出 $1$ 个石子）。接下来，小 W 只能选择移走第 $4$ 堆，然后将第 $3$ 堆分割为 $1$ 和 $2$。最后轮到小 E，他只能移走后两堆中数量为 $1$ 的一堆，将另一堆分割为 $1$ 和 $1$。这样，轮到小 W 时，所有堆的数量均为 $1$，则他输掉了比赛。故小 E 存在必胜策略。
+输入格式本题有多组数据。
+第一行一个整数 $T$，表示数据组数。
+对于每组数据：
+第一行一个整数 $N$，表示桌子上共有 $N$ 堆石子，这里的 $N$ 即为题目描述中的 $2n$。
+第二行 $N$ 个整数 $S_{1 \dots N}$。
+输出格式对于每组数据，如果小 E 必胜，则一行一个字符串 YES，否则一行一个字符串 NO。
+样例 #1样例输入 #1241 2 3 161 1 1 1 1 1
+
+样例输出 #1YESNO
+
+提示对于 $20%$ 的数据，$N&#x3D;2$。
+对于另外 $20%$ 的数据，$N \le 4$，$S_i \le 50$。
+对于 $100%$ 的数据，$1 \le T \le 20$，$1 \le N \le 2 \times 10^4$ 且 $N$ 为偶数，$1 \le S_i \le 2 \times 10^9$。
+#include&lt;bits/stdc++.h&gt;using namespace std;// 递归函数，计算必胜策略的情况long long gui(long long a, long long b) &#123;	if (a % 2 == 1 &amp;&amp; b % 2 == 1)		return 0; // 如果两堆石子数都是奇数，返回0，表示无法必胜	if (a % 2 == 0 &amp;&amp; b % 2 == 0) &#123;		return gui(a / 2, b / 2) + 1; // 如果两堆石子数都是偶数，递归调用gui函数，并加1	&#125;	else &#123;		if (a % 2 == 1) &#123;			return gui(a + 1, b); // 如果第一堆石子数是奇数，将其加1，继续递归调用gui函数		&#125;		else &#123;			return gui(a, b + 1); // 如果第二堆石子数是奇数，将其加1，继续递归调用gui函数		&#125;	&#125;&#125;int main() &#123;	int t;	cin &gt;&gt; t; // 输入游戏的轮数	for (int i = 1; i &lt;= t; i++) &#123;		long long n, g, h, ans = 0;		cin &gt;&gt; n; // 输入石子堆的数量		// 遍历每一组石子堆		for (int j = 1; j &lt;= n / 2; j++) &#123;			cin &gt;&gt; g &gt;&gt; h; // 输入每组石子堆的石子数量			ans = (ans ^ gui(g, h)); // 异或运算，计算所有组的结果		&#125;		if (ans == 0)			cout &lt;&lt; &quot;NO&quot; &lt;&lt; endl; // 如果结果为0，表示无法必胜		else			cout &lt;&lt; &quot;YES&quot; &lt;&lt; endl; // 如果结果不为0，表示存在必胜策略	&#125;	return 0;&#125;
+
+
+P5851 [USACO19DEC] Greedy Pie Eaters P
+
+[USACO19DEC] Greedy Pie Eaters P题目背景Farmer John has $M$ cows, conveniently labeled $1 \ldots M$, who enjoy the occasional change of pacefrom eating grass. As a treat for the cows, Farmer John has baked $N$ pies ($1 \leq N \leq 300$), labeled$1 \ldots N$. Cow $i$ enjoys pies with labels in the range $[l_i, r_i]$ (from $l_i$ to $r_i$ inclusive),and no two cows enjoy the exact same range of pies. Cow $i$ also has a weight, $w_i$, whichis an integer in the range $1 \ldots 10^6$.
+Farmer John may choose a sequence of cows $c_1,c_2,\ldots, c_K,$ after which theselected cows will take turns eating in that order. Unfortunately, the cowsdon’t know how to share! When it is cow $c_i$’s turn to eat, she will consumeall of the pies that she enjoys — that is, all remaining pies in the interval$[l_{c_i},r_{c_i}]$. Farmer John would like to avoid the awkward situationoccurring when it is a cows turn to eat but all of the pies she enjoys have already beenconsumed. Therefore, he wants you to compute the largest possible total weight($w_{c_1}+w_{c_2}+\ldots+w_{c_K}$) of a sequence $c_1,c_2,\ldots, c_K$ for which each cow in thesequence eats at least one pie.
+题目描述Farmer John 有 $M$ 头奶牛，为了方便，编号为 $1,\dots,M$。这些奶牛平时都吃青草，但是喜欢偶尔换换口味。Farmer John 一天烤了 $N$ 个派请奶牛吃，这 $N$ 个派编号为 $1,\dots,N$。第 $i$ 头奶牛喜欢吃编号在 $\left[ l_i,r_i \right]$ 中的派（包括两端），并且没有两头奶牛喜欢吃相同范围的派。第 $i$ 头奶牛有一个体重 $w_i$，这是一个在 $\left[ 1,10^6 \right]$ 中的正整数。
+Farmer John 可以选择一个奶牛序列 $c_1,c_2,\dots,c_K$，并让这些奶牛按这个顺序轮流吃派。不幸的是，这些奶牛不知道分享！当奶牛 吃派时，她会把她喜欢吃的派都吃掉——也就是说，她会吃掉编号在 $[l_{c_i},r_{c_i}]$ 中所有剩余的派。Farmer John 想要避免当轮到一头奶牛吃派时，她所有喜欢的派在之前都被吃掉了这样尴尬的情况。因此，他想让你计算，要使奶牛按 $c_1,c_2,\dots,c_K$ 的顺序吃派，轮到这头奶牛时她喜欢的派至少剩余一个的情况下，这些奶牛的最大可能体重（$w_{c_1}+w_{c_2}+\ldots+w_{c_K}$）是多少。
+输入格式第一行包含两个正整数 $N,M$；
+接下来 $M$ 行，每行三个正整数 $w_i,l_i,r_i$。
+输出格式输出对于一个合法的序列，最大可能的体重值。
+样例 #1样例输入 #12 2100 1 2100 1 1
+
+样例输出 #1200
+
+提示样例解释在这个样例中，如果奶牛 $1$ 先吃，那么奶牛 $2$ 就吃不到派了。然而，先让奶牛 $2$ 吃，然后奶牛 $1$ 只吃编号为 $2$ 的派，仍可以满足条件。
+对于全部数据，$1 \le N \le 300,1 \le M \le \dfrac{N(N-1)}{2},1 \le l_i,r_i \le N,1 \le w_i \le 10^6$。
+数据范围对于测试点 $2-5$，满足 $N \le 50,M \le 20$；
+对于测试点 $6-9$，满足 $N \le 50$。
+USACO 2019 December 铂金组T1
+#include &lt;bits/stdc++.h&gt;using namespace std;int dp[310][310];int he[310][310][310]; // a, b, c: 对于区间bc，位置a处最大能吃的牛的重量int main() &#123;	int n, m;	cin &gt;&gt; n &gt;&gt; m; // 输入n和m的值	int w, l, r;	for (int i = 1; i &lt;= m; i++) &#123;		cin &gt;&gt; w &gt;&gt; l &gt;&gt; r;		for (int i = l; i &lt;= r; i++) &#123;			he[i][l][r] = w; // 记录每个位置和区间的最大能吃的牛的重量		&#125;	&#125;	// 动态规划预处理最大能吃的牛的重量	for (int len = 0; len &lt; n; len++) &#123;		for (int i = 1, j; i + len &lt;= n; i++) &#123;			j = i + len;			for (int k = i; k &lt;= j; k++) &#123;				he[k][i - 1][j] = max(he[k][i - 1][j], he[k][i][j]);				he[k][i][j + 1] = max(he[k][i][j + 1], he[k][i][j]);			&#125;		&#125;	&#125;	// 动态规划求解最优解	for (int len = 0; len &lt; n; len++) &#123;		for (int i = 1, j; i + len &lt;= n; i++) &#123;			j = i + len;			for (int k = i; k &lt; j; k++) &#123;				dp[i][j] = max(dp[i][j], dp[i][k] + dp[k + 1][j]);			&#125;			for (int k = i; k &lt;= j; k++) &#123;				dp[i][j] = max(dp[i][j], dp[i][k - 1] + dp[k + 1][j] + he[k][i][j]);			&#125;		&#125;	&#125;	cout &lt;&lt; dp[1][n];	return 0;&#125;
+
+
+P8756 [蓝桥杯 2021 省 AB2] 国际象棋
+
+[蓝桥杯 2021 省 AB2] 国际象棋题目描述众所周知， “八皇后” 问题是求解在国际象棋棋盘上摆放 $8$ 个皇后，使得两两之间互不攻击的方案数。已经学习了很多算法的小蓝觉得 “八皇后” 问题太简单了，意犹末尽。作为一个国际象棋迷，他想研究在 $N \times M$ 的棋盘上，摆放 $K$ 个马，使得两两之间互不攻击有多少种摆放方案。由于方案数可能很大，只需计算答案除以 $1000000007$ (即 $\left.10^{9}+7\right)$ 的余数。
+如下图所示，国际象棋中的马摆放在棋盘的方格内，走 “日” 字, 位于 $(x, y)$ 格的马（第 $x$ 行第 $y$ 列）可以攻击 $(x+1, y+2),(x+1, y-2),(x-1, y+2),(x-1, y-2),(x+2, y+1),(x+2, y-1),(x-2, y+1),(x-2, y-1)$ 共 $8$ 个 格子。
+
+输入格式输入一行包含三个正整数 $N, M, K$, 分别表示棋盘的行数、列数和马的个数。
+输出格式输出一个整数，表示摆放的方案数除以 $1000000007\left(\right.$ 即 $\left.10^{9}+7\right)$ 的余数。
+样例 #1样例输入 #11 2 1
+
+样例输出 #12
+
+样例 #2样例输入 #24 4 3
+
+样例输出 #2276
+
+样例 #3样例输入 #33 20 12
+
+样例输出 #3914051446
+
+提示对于 $5 %$ 的评测用例, $K&#x3D;1$;
+对于另外 $10 %$ 的评测用例, $K&#x3D;2$;
+对于另外 $10 %$ 的评测用例, $N&#x3D;1$;
+对于另外 $20 %$ 的评测用例, $N, M \leq 6, K \leq 5$;
+对于另外 $25 %$ 的评测用例, $N \leq 3, M \leq 20 ， K \leq 12$;
+对于所有评测用例, $1 \leq N \leq 6,1 \leq M \leq 100,1 \leq K \leq 20$。
+蓝桥杯 2021 第二轮省赛 A 组 I 题（B 组 J 题）。
+#include &lt;bits/stdc++.h&gt;using namespace std;#define ll long longconst int P=1e9+7;const int yasuo=64;// 计算 a 的逆元（在模 P 下）ll inv(ll a)&#123;	ll m=P-2;	ll ans=a;	ll now=P;	while(m!=0)&#123;		if(m&amp;1)&#123;			ans=(ans*now)%P;		&#125;		now=(now*now)%P;		m=m&gt;&gt;1;	&#125;	return ans;&#125;// 判断两个位置是否互不攻击bool gehang(int a,int c)&#123;	int m=a;	int n=c;	m&gt;&gt;=1;    if(m&amp;n) return false; 	m=a;	n=c;	n&gt;&gt;=1;    if(m&amp;n) return false;	return true;&#125;// 判断两个位置是否互不攻击（斜线方向）bool xiangling(int a,int b)&#123;	int m=a;	int n=b;	m&gt;&gt;=2;    if(m&amp;n) return false;	m=a;	n=b;	n&gt;&gt;=2;    if(m&amp;n) return false;	return true;&#125;int counts[64];int dp[2][yasuo][yasuo][30]; // 前两行的信息，走的马数 int main()&#123;    int n,m,k;    cin&gt;&gt;n&gt;&gt;m&gt;&gt;k;    // 统计每个二进制位上 1 的个数    for(int i=0;i&lt;64;i++)&#123;    	int c=i,now=0;		while(c!=0)&#123;			if(c&amp;1)now++;			c=c&gt;&gt;1;		&#125;		counts[i]=now; 	&#125;	int ff=1&lt;&lt;n;  // 需要保存的状态压缩位数     for(int i=1;i&lt;=m;i++)&#123;	    memset(dp[i%2],0,sizeof(dp[i%2]));    	if(i==1)dp[0][0][0][0]=1;    	for(int l=0;l&lt;ff;l++)&#123;			for(int h=0;h&lt;ff;h++)&#123;	    		for(int num=0;num&lt;=k;num++)&#123;	    			if(!dp[(i-1)%2][h][l][num]) continue;					for(int j=0;j&lt;ff;j++)&#123;			    		if(xiangling(l,j)&amp;&amp;gehang(h,j))&#123;			    			dp[i%2][l][j][num+counts[j]]=(dp[(i-1)%2][h][l][num]+dp[i%2][l][j][num+counts[j]])%P;					&#125;					&#125;				&#125;			&#125;		&#125;	&#125;	ll ans=0;    for(int i=0;i&lt;ff;i++)    for(int j=0;j&lt;ff;j++)&#123;    	ans=(ans+dp[m%2][i][j][k])%P;	&#125;	cout&lt;&lt;ans;     return 0;&#125;
+
+
+原文作者：kalipolis。许可：CC BY-NC-SA 3.0 CN。
+
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>blog</tag>
+        <tag>c</tag>
+        <tag>c++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>歌单分享</title>
+    <url>//2023/09/12/%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E6%AD%8C%E5%8D%95%E5%88%86%E4%BA%AB/</url>
+    <content><![CDATA[
+
+把自己网易云的歌单链接了过来，大家可以后台挂着听👐，我的网易云音乐账号：点击跳转
+好吧主要是我想用，这样不用启动网易云咯
+日语歌单
+
+打开网易云歌单
+
+粤语歌单
+
+打开网易云歌单
+
+英语歌单
+
+打开网易云歌单
+
+纯音乐
+
+打开网易云歌单
+
+电音
+
+打开网易云歌单
+
+原文作者：kalipolis。许可：CC BY-NC-SA 3.0 CN。
+
+]]></content>
+      <categories>
+        <category>分享</category>
+      </categories>
+      <tags>
+        <tag>blog</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>推荐系统笔记 02：多路召回，不是把候选越加越多</title>
+    <url>//2026/03/18/multi-channel-retrieval/</url>
+    <content><![CDATA[
+回顾笔记 · 按学习路线归档，非当日发布。
+
+三路召回分别返回 &#123;A,B&#125;、&#123;B,C&#125;、&#123;B,D&#125;，不能说拿到了六个候选，去重后只有四个。B 有三路命中，这个信息值得留，但它不应该占三个坑。
+先保留来源，再谈配额输出不只是一串 item_id。我会记录每个候选命中的通道和通道内名次。不同通道的原始分数通常不能直接比较，先按配额合并比随手把分数相加好解释。预算只够四条时，重复命中的候选去重之后，再从未用完的通道补位。
+离线对比时固定去重后的总候选数和评估人群。新增通道让 Recall@K 上升，要再切冷用户、尾部物品看增量来自哪里；追加了一堆候选才涨，不能直接归功于通道本身。
+参考
+王树森推荐系统课程：召回
+
+]]></content>
+      <categories>
+        <category>推荐系统</category>
+      </categories>
+      <tags>
+        <tag>学习笔记</tag>
+        <tag>召回</tag>
+        <tag>评估指标</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>推荐系统笔记 01：为什么要分召回、粗排和精排</title>
+    <url>//2026/03/05/recommendation-funnel/</url>
+    <content><![CDATA[
+回顾笔记 · 按学习路线归档，非当日发布。
+
+推荐系统不是给全库每个物品打一次最精细的分。假设库存有一百万件，一个请求拿到 800 个候选，粗排留下 150 个，精排选出 30 个，最后发给页面 10 个。这里只是算量级，不是线上配置。
+前一层的错误，后一层未必补得回来用户喜欢的纪录片如果没有被召回，精排再好也没用。反过来，只靠召回相似度直接展示，又容易在前十条塞进同一个系列。可以粗略理解成：召回负责找值得考虑的东西，排序负责判断哪个更可能相关，重排才看放在一起是否合适。
+给一个固定的请求留一张表：进入每层的候选数、目标物品是否还在、阶段耗时。碰到结果不对，先找目标在哪层消失，再决定调哪一层。
+参考
+王树森推荐系统课程及授课资料
+
+]]></content>
+      <categories>
+        <category>推荐系统</category>
+      </categories>
+      <tags>
+        <tag>学习笔记</tag>
+        <tag>召回</tag>
+        <tag>粗排-精排</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>广告系统笔记 01：CTR 预估不只看 AUC</title>
+    <url>//2026/04/02/ctr-logloss-calibration/</url>
+    <content><![CDATA[
+回顾笔记 · 按学习路线归档，非当日发布。
+
+把一组预估概率全乘以 0.5，排序不会变，AUC 也不会变。但原本预估 10% 的流量现在显示 5%，拿它去算预期点击，这个差异就实打实存在了。
+两张图比一个指标管用先用 AUC 看正负样本的排序，再画校准图：按预估值分桶，比较每桶平均预估与实际点击率，并标出桶内样本量。如果 0.1 附近的桶实际点击 0.06，还要按位置、设备切开看，不要先怪模型一律高估。Log loss 会惩罚很自信但错得很离谱的预测。
+如果负样本做了下采样，验证集最好保留原始分布。否则在采样分布上看起来校准，回到真实曝光分布仍可能偏。位置差异也不能靠一个全站均值解释。
+参考
+McMahan 等，Ad Click Prediction: a View from the Trenches（2013）
+scikit-learn：Probability calibration
+
+]]></content>
+      <categories>
+        <category>广告系统</category>
+      </categories>
+      <tags>
+        <tag>学习笔记</tag>
+        <tag>评估指标</tag>
+        <tag>CTR预估</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>广告系统笔记 02：没点，不等于不喜欢</title>
+    <url>//2026/04/28/exposure-bias/</url>
+    <content><![CDATA[
+回顾笔记 · 按学习路线归档，非当日发布。
+
+点击是用户偏好和看见机会共同作用的结果。第一位点击多，不一定因为第一位的物品更好。没展示的物品甚至没有点击标签，往训练集里统一写成 0，会悄悄把“没机会”翻译成“不喜欢”。
+加权之前先看覆盖在简化的曝光模型中，若某条被观察概率是 0.2，对观察样本用逆倾向权重 5；概率是 0.01 时，权重就冲到 100。少量样本可能左右整个估计，所以要看权重分布，必要时裁剪，并说明裁剪引入偏差。历史策略根本不展示的一类内容，不能靠给 0 取倒数救回来。
+如果没有可信的随机或干预数据，这更像是一条诊断思路，不是拿现有日志就能还原任意排序策略的公式。
+参考
+Joachims 等，Unbiased Learning-to-Rank with Biased Feedback（2017）
+
+]]></content>
+      <categories>
+        <category>广告系统</category>
+      </categories>
+      <tags>
+        <tag>评估指标</tag>
+        <tag>CTR预估</tag>
+        <tag>选择性偏差</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>推荐系统笔记 03：特征交叉到底交叉了什么</title>
+    <url>//2026/04/08/feature-interactions/</url>
+    <content><![CDATA[
+回顾笔记 · 按学习路线归档，非当日发布。
+
+如果只给模型“场景&#x3D;外卖”和“时段&#x3D;深夜”，线性模型只能把这两个权重相加。它无法单独给“深夜外卖”一个额外的分，除非把这个组合作为新特征，或者换能表达交互的模型。
+组合有用，但枚举不完场景十种、时段八种，80 个组合还好说。把它换成用户 ID 和商品 ID，组合很快就变得稀疏。FM 用两个向量的内积给交互打分；某个组合没出现过时，组成它的单个特征依然可能在别的组合里学到参数。这个优点不意味着全新 ID 能凭空学到东西。
+做对照时可以保留同样的切分、输入和评估口径，比较不交叉、只交叉少数业务特征、以及 FM。先看长尾切片再解释收益，不然整体数字容易被头部样本带着跑。
+参考
+Rendle，Factorization Machines（2010）
+
+]]></content>
+      <categories>
+        <category>推荐系统</category>
+      </categories>
+      <tags>
+        <tag>学习笔记</tag>
+        <tag>CTR预估</tag>
+        <tag>特征工程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>论文笔记｜Item2Vec：把会话当句子之前，先定窗口</title>
+    <url>//2026/04/19/item2vec-window/</url>
+    <content><![CDATA[
+回顾笔记 · 按学习路线归档，非当日发布。
+
+把商品 ID 当词，并不会自动让邻近商品变成“相似”。模型学到哪种关系，先由训练对决定。视频 A B C D E 的窗口如果是两步，A 能跟 B/C 成对；做全会话共现，A 还会跟 D/E 成对。
+不要把浏览原因当已知购买前对比的两款耳机可能是替代品，耳机和收纳盒可能是互补品。只靠共现目标，两类关系都会混在向量近邻里。可以从同一批查询物品采样，查看头部、长尾各自的邻居，比较窗口、会话阈值和负采样设置，而不是只看几个顺眼的例子。
+另一个容易漏的点是时间泄漏。先按时间切日志，再拟合向量；用全量交互训练向量、只把最后一次行为当测试，未来信息可能已经写到向量中了。
+参考
+Barkan 与 Koenigstein，Item2Vec（2016）
+
+]]></content>
+      <categories>
+        <category>推荐系统</category>
+      </categories>
+      <tags>
+        <tag>召回</tag>
+        <tag>论文精读</tag>
+        <tag>序列建模</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>推荐系统笔记 04：ItemCF 里，热门物品为什么总出现</title>
+    <url>//2026/04/15/item-cf/</url>
+    <content><![CDATA[
+回顾笔记 · 按学习路线归档，非当日发布。
+
+如果所有人都看过 A，那么 A 和谁的共现量都不小。直接按共现次数找邻居，榜单就会越来越像热门榜。一个常见基线是把共现除以两个物品交互用户数乘积的平方根。
+用几个数字算一下A 有 100 个交互用户，B 和 C 各有 10 个。A&#x2F;B 共现 8 次，B&#x2F;C 共现 4 次。用上面的归一化，A&#x2F;B 大约是 0.253，B&#x2F;C 是 0.4，虽然前者绝对共现次数更大。反过来，两个冷门物品仅被同一个人看过，分数可能直接到 1，所以实践里还要考虑最小支持度或收缩。
+日志要先明确“同时出现”是同一会话、同一天，还是整个历史。一个看过上千商品的用户如果贡献所有两两组合，既容易拖慢计算，也会制造很多宽泛而不稳定的关联。
+参考
+Sarwar 等，Item-Based Collaborative Filtering Recommendation Algorithms（2001）
+
+]]></content>
+      <categories>
+        <category>推荐系统</category>
+      </categories>
+      <tags>
+        <tag>学习笔记</tag>
+        <tag>召回</tag>
+        <tag>协同过滤</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>推荐系统笔记 05：新物品没交互，怎么进候选池</title>
+    <url>//2026/04/22/new-item-cold-start/</url>
+    <content><![CDATA[
+回顾笔记 · 按学习路线归档，非当日发布。
+
+新物品不是模型预测“差”，而是基于历史交互的那一路没信息。把点击次数当特征时，零次点击还得再分有没有曝光：一条从没展示过的内容和一条展示千次没点击的内容，不该当成一回事。
+先让它有机会，再看概率一条简单的路径是用类目、关键词或内容向量做独立召回，在重排给相关的新物品留一个小配额。明确配额按什么人群触发、多少曝光就退出、记录哪些反馈。探索本身有成本，不能只看新物品的点击率就宣称整个首页更好。
+用发布时间做切片能避免把历史热门混进新物品组。看曝光覆盖率、拿到足够反馈所需时间，以及对全站负反馈的影响，三件事最好分开报。
+参考
+Google Developers：Recommendation Systems
+
+]]></content>
+      <categories>
+        <category>推荐系统</category>
+      </categories>
+      <tags>
+        <tag>学习笔记</tag>
+        <tag>召回</tag>
+        <tag>冷启动</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>搜索系统笔记 01：BM25 为什么不把词频直接加起来</title>
+    <url>//2026/05/19/bm25-basics/</url>
+    <content><![CDATA[
+回顾笔记 · 按学习路线归档，非当日发布。
+
+“咖啡”在一条结果里出现两次，可能比一次更相关；出现二十次，不该自动获得二十倍的贡献。BM25 的词频部分会饱和，常见词和稀有词的权重也不同。同样出现一次，短标题和整页长文不能完全等价。
+先看分词，再调参数搜“机械键盘茶轴”，如果索引端切出了“茶轴”，查询端却把它拆成两个单字，调参数不一定有用。先用分析器看 token，再用解释接口看匹配到哪些词。k1 影响词频饱和，b 在常见实现里调节长度归一化强度；二者都不是修复召回分词的开关。
+一组有商品型号、同义词、少量常见词的查询，比一个全量均值更容易看出词法基线的长处和短板。
+和向量召回一起用时BM25 打 18、余弦相似度打 0.76，这两个数不能直接加。RRF 把候选在各路排第几转成 1/(k+rank) 再求和。k=60 时，A 只在词法路排第一，得分约 0.0164；B 在两路都排第八，得分约 0.0294，反而排得更高。这个设定偏好两路共识，搜精确商品型号时要单独看是否伤到词法首位。
+参考
+Robertson 与 Zaragoza，The Probabilistic Relevance Framework: BM25 and Beyond（2009）
+Elasticsearch：Explain API
+Cormack 等，Reciprocal Rank Fusion（2009）
+
+]]></content>
+      <categories>
+        <category>搜索系统</category>
+      </categories>
+      <tags>
+        <tag>学习笔记</tag>
+        <tag>倒排索引</tag>
+        <tag>词法召回</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>论文精读｜DeepFM：FM 和 DNN 为什么共享 embedding</title>
+    <url>//2026/05/05/deepfm-shared-embedding/</url>
+    <content><![CDATA[
+回顾笔记 · 按学习路线归档，非当日发布。
+
+DeepFM 的两条支路不是先训练一个 FM，再把它的打分喂给神经网络。FM 负责表达低阶交互，DNN 从多个 field 的向量拼接中学习更复杂的组合，二者在输出端合并。关键是输入的特征 embedding 共享，梯度从两边回来。
+怎么拆开做对照只跑完整模型看不到是谁贡献了收益。可以固定 embedding 维度和训练数据，做线性、FM、DNN、DeepFM 四组。如果还想知道共享本身有没有用，再加一个不共享版，同时记下参数量变化。二阶交互能算出来，不代表深支路真的学到可迁移的高阶规律。
+工程上先把 field 定义写清楚。一条输入若把“商品类别缺失”和“未登录用户”映射成同一个 ID，结构再好也解决不了语义混用。
+参考
+Guo 等，DeepFM: A Factorization-Machine based Neural Network for CTR Prediction（2017）
+
+]]></content>
+      <categories>
+        <category>推荐系统</category>
+      </categories>
+      <tags>
+        <tag>CTR预估</tag>
+        <tag>特征工程</tag>
+        <tag>论文精读</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>论文精读｜ESMM：训练 pCVR 时，样本空间到底是哪一个</title>
+    <url>//2026/05/26/esmm-conversion/</url>
+    <content><![CDATA[
+回顾笔记 · 按学习路线归档，非当日发布。
+
+点击后转化概率和展示后转化概率不是一个量。假设展示后有 10% 点击，点击后有 5% 转化，展示后沿这条路径转化的概率就是 0.5%。前提是定义的转化必须经过这次点击。
+用曝光空间训练两个目标ESMM 用全曝光空间监督点击与点击后转化事件，后者的预估由 pCTR 与 pCVR 相乘得到。相比只在点击样本上训练 CVR，这是另一种使用全空间表示的方式；不等于能直接观测未点击用户的反事实转化。
+落到日志，先定点击归因和转化窗口。延迟未到的曝光不能简单标成没有转化；离线切分要给最后一段流量留足观测时间，否则模型可能只学会最近的标签更少。
+参考
+Ma 等，Entire Space Multi-Task Model（2018）
+
+]]></content>
+      <categories>
+        <category>广告系统</category>
+      </categories>
+      <tags>
+        <tag>CTR预估</tag>
+        <tag>论文精读</tag>
+        <tag>多任务学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>论文精读｜SASRec：序列推荐的 mask 有两种</title>
+    <url>//2026/05/12/sasrec-masking/</url>
+    <content><![CDATA[
+回顾笔记 · 按学习路线归档，非当日发布。
+
+给序列 A B C 做下一物品预测时，B 所在位置不能先看见 C 再预测 C，这叫因果约束。批处理把短序列补到同一长度，那些补位也不该进入注意力或 loss。这两件事不是一个问题。
+用一个样本检查索引输入 [PAD, A, B]，目标 [忽略, B, C]。检查 A 位只看合法的前缀，检查 PAD 不参与 softmax 和 loss。最好构造一个只改未来 token 的测试，验证较早位置的表示保持不变。只靠训练 loss 下降，很难发现切片错了一位。
+论文里的评估协议也要跟着读。用采样负例形成候选集得到的 Hit@K，不能直接拿来和全库检索的 Recall@K 比高低。
+参考
+Kang 与 McAuley，Self-Attentive Sequential Recommendation（2018）
+
+]]></content>
+      <categories>
+        <category>推荐系统</category>
+      </categories>
+      <tags>
+        <tag>评估指标</tag>
+        <tag>论文精读</tag>
+        <tag>序列建模</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>搜索系统笔记 02：HNSW 的速度要和哪种召回率一起看</title>
+    <url>//2026/07/15/hnsw-budget/</url>
+    <content><![CDATA[
+回顾笔记 · 按学习路线归档，非当日发布。
+
+ANN Recall@K 和业务 Recall@K 名字一样，分母可以完全不同。前者拿精确向量搜索的 top K 当近邻真值；后者拿点击、人工标注等相关结果做真值。前者好，说明索引比较忠实地找到了向量近邻，不代表向量本身相关。
+固定嵌入再扫查询预算先用同样的数据和距离函数做小规模精确检索。HNSW 查询时逐级试 efSearch，每一档报近邻召回、P50&#x2F;P95 延迟和内存，别只记录平均值。构建图时的 M 和 efConstruction 又是另一组权衡，迭代成本不同，别混进查询参数的扫表里。
+如果要叠类目过滤，把过滤比例也做成切片。原本看着很快的近邻搜索，在非常稀的过滤条件下未必同样稳定。
+参考
+Malkov 与 Yashunin，Efficient and Robust Approximate Nearest Neighbor Search Using HNSW（2016）
+
+]]></content>
+      <categories>
+        <category>搜索系统</category>
+      </categories>
+      <tags>
+        <tag>评估指标</tag>
+        <tag>向量检索</tag>
+        <tag>工程实践</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>工程笔记｜离线特征和线上特征差一口气</title>
+    <url>//2026/07/28/ranker-skew/</url>
+    <content><![CDATA[
+回顾笔记 · 按学习路线归档，非当日发布。
+
+“用户近七天点击数”看起来定义完整，实际还有一串问题：以什么时区划日、按事件时间还是落库时间、是否包括这次请求之后写回的点击、缓存多久。有一处不对，离线和在线就可能用成了两列不同的数。
+回放一条真实结构的请求用合成请求做最小回放：请求发生在 7 月 15 日中午，构造一个早于窗口、一个窗口刚开始、一个晚到但事件时间在窗内的事件。写出预期哪些应计入，确定离线关联是否只拿请求当时可见的记录。
+建立可对齐的输入快照，再比较每列的缺失率、分位点和默认值。预测整体偏移时，先做一批请求逐列 diff 可能比盲调学习率快得多。
+参考
+Google Developers：Rules of Machine Learning
+Feast：Point-in-time joins
+
+]]></content>
+      <categories>
+        <category>推荐系统</category>
+      </categories>
+      <tags>
+        <tag>特征工程</tag>
+        <tag>工程实践</tag>
+        <tag>排序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>推荐系统笔记 07：双塔里最难解释的是负样本</title>
+    <url>//2026/07/05/two-tower-negatives/</url>
+    <content><![CDATA[
+回顾笔记 · 按学习路线归档，非当日发布。
+
+用随机负例区分猫粮和自行车很容易；在十种猫粮中找出用户真正会选哪种，难得多。双塔能不能把相近候选区分开，和训练里见过什么负样本有关。另一边，相关但未点击的商品也可能被误当作强负例。
+同批负例要处理重复一个 batch 有两个用户点了同一个商品，对角线以外的该商品并不是另一个副本制造出来的真实负例。可按商品 ID 去掉意外命中，或用明确的多正例目标。若批采样更常带进热门品，训练目标感受到的负例分布也不是均匀库分布。
+评估时分别测随机负样本和更接近线上候选的检索场景。顺手记录模型版本、索引版本和向量归一化方式，不然一次相似度变动可能来自索引而不是训练。
+参考
+TensorFlow Recommenders：Retrieval task API
+TensorFlow Recommenders：Efficient retrieval
+
+]]></content>
+      <categories>
+        <category>推荐系统</category>
+      </categories>
+      <tags>
+        <tag>召回</tag>
+        <tag>工程实践</tag>
+        <tag>双塔</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>推荐系统笔记 06：重排先试 MMR，别急着换精排模型</title>
+    <url>//2026/06/08/mmr-reranking/</url>
+    <content><![CDATA[
+回顾笔记 · 按学习路线归档，非当日发布。
+
+精排给两条同款内容 0.91 和 0.89，另一类内容 0.85。按分数直接取前两条很合理，但摆到一页可能显得重复。MMR 每选一条，就重新计算剩下物品与已选集合里最相似那条的相似度。
+手算一轮用 0.7 × 相关性 - 0.3 × 最大相似度。第一条取 0.91 的物品。假设另外两条与首条相似度分别为 0.95 和 0.10，第二轮得到 0.338 和 0.565，后一条反超。前提是两个分数尺度能放到一起解释，不能拿未校准的任意模型 logit 直接套这个系数。
+这只能处理已进池的候选。验证除了相关性下降多少，还应看重复率、类目覆盖和不同用户的偏好，不宜把多样性一律设得很高。
+参考
+Carbonell 与 Goldstein，The Use of MMR（1998）
+
+]]></content>
+      <categories>
+        <category>推荐系统</category>
+      </categories>
+      <tags>
+        <tag>工程实践</tag>
+        <tag>重排</tag>
+        <tag>多样性</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>复习随记：NDCG 没变，列表真的没变吗</title>
+    <url>//2026/06/22/ndcg-reading-note/</url>
+    <content><![CDATA[
+回顾笔记 · 按学习路线归档，非当日发布。
+
+单看一个 NDCG 均值很容易觉得两版模型差不多。拆到查询上，可能正好是短查询变好、长尾查询变差。现在比较喜欢先拿两条差异大的查询看列表，再回去看为什么均值没反应。
+先约定 gain 和理想排序手算时令等级 0&#x2F;1&#x2F;2 的 gain 取 2^等级 - 1。列表等级 [2,0,1] 的 DCG@3 为 3 + 0 + 1/2 = 3.5，理想列表 [2,1,0] 约为 3 + 1/1.585 = 3.631，所以 NDCG 约 0.964。把同一等级内的两个物品对调，指标不会变，尽管内容可以完全不同。
+没有任何相关结果的查询该如何聚合，也要先写进口径。把它当 0、跳过、或单独报告，得到的整体分数并不一样。
+参考
+Järvelin 与 Kekäläinen，Cumulated Gain-Based Evaluation of IR Techniques（2002）
+
+]]></content>
+      <categories>
+        <category>杂谈</category>
+      </categories>
+      <tags>
+        <tag>学习笔记</tag>
+        <tag>评估指标</tag>
+        <tag>排序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LLM 笔记 01：分词和下一个 token 预测</title>
+    <url>//2026/08/25/llm-tokenization/</url>
+    <content><![CDATA[
+回顾笔记 · 按学习路线归档，非当日发布。
+
+同一段中文在两个 tokenizer 里可以有不同长度。预算与训练目标都按实际 token 序列算，不按视觉上的字数。复制一段文字，把空格、换行和数字格式分别改掉，再用目标模型自带 tokenizer 对比，比凭感觉估 token 靠谱。
+Teacher forcing 不是上线的生成方式训练时真实前缀已知，目标序列通常通过错位一格得到。推理时下一步吃进去的是刚生成的 token；前一步走偏了，后面就沿着新前缀走。模型给出的概率是在该上下文和 token 序列下的条件概率，不是句子里陈述正确的概率。
+看 perplexity 时至少核对 tokenizer、上下文长度和被计分部分。不同切分的“每 token”尺度不同，两个数字不宜直接比优劣。
+参考
+Sennrich 等，Neural Machine Translation of Rare Words with Subword Units（2016）
+Jurafsky 与 Martin，Speech and Language Processing
+
+]]></content>
+      <categories>
+        <category>大模型</category>
+      </categories>
+      <tags>
+        <tag>学习笔记</tag>
+        <tag>Tokenization</tag>
+        <tag>语言模型</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Agent 笔记 02：工具超时之后，不要直接再执行一次</title>
+    <url>//2026/10/27/agent-retry-state/</url>
+    <content><![CDATA[
+回顾笔记 · 按学习路线归档，非当日发布。
+
+工具超时有三种可能：还没收到请求、收到但没做完、已经做完而回执丢了。查资料重复几次通常只是浪费，写入或发送没这么简单。更实用的返回值是“未知”，之后走状态查询。
+用业务幂等键约束重试比如生成一条草稿，把请求 ID 作为幂等键传给执行服务，同一个键不重复创建。状态表记 pending / succeeded / failed / unknown，不是把断网直接改成 failed。幂等约束要在实际执行端生效，只在模型 prompt 里写“不许重复做”没有用。
+预算也算进去：读请求可短时退避重试，写请求有明确失败再重试，结果长期未知就把操作和状态留给用户处理。日志应能把一次逻辑动作的多次尝试串起来。
+参考
+AWS Builders’ Library：Making retries safe with idempotent APIs
+
+]]></content>
+      <categories>
+        <category>杂谈</category>
+      </categories>
+      <tags>
+        <tag>工程实践</tag>
+        <tag>Agent</tag>
+        <tag>幂等</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LLM 笔记 04：RAG 答错了，先查证据有没有进上下文</title>
+    <url>//2026/10/16/rag-error-slices/</url>
+    <content><![CDATA[
+回顾笔记 · 按学习路线归档，非当日发布。
+
+看到模型胡说，第一反应不一定要调 prompt。先看文档是否入库、是否进 top K、是否被重排或截断挤掉。证据确实进上下文了，再判断是没利用、误解，还是引用了错误段落。
+做两条对照路径同一问题先走自动检索，再手工补入确切证据，其他条件不变。如果后者答对，可以优先查索引、检索或上下文打包；如果也没答对，就值得查提示语、输出约束和问题本身。人工补证据不代表得到一个严格的生成上界，但足够作为定位线索。
+例如问“怎么改 NexT 的归档设置”，需要命中当前对应版本的配置说明；拿了旧版本文档，在片段语义上很相关，也可能给出完全错误的字段。
+参考
+Lewis 等，Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks（2020）
+
+]]></content>
+      <categories>
+        <category>大模型</category>
+      </categories>
+      <tags>
+        <tag>评估指标</tag>
+        <tag>RAG</tag>
+        <tag>检索</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>论文精读｜RankMixer：排序层的特征是怎么混的</title>
+    <url>//2026/10/07/rankmixer-reading/</url>
+    <content><![CDATA[
+回顾笔记 · 按学习路线归档，非当日发布。
+
+排序特征往往分属用户、物品和上下文。读 RankMixer 时，容易把“混合”当万能词：得先说是哪个轴之间交换了信息。架构一边做跨 token 的信息交换，一边用 per-token 的前馈网络处理各 token 的表示，二者在结构上的职责不一样。
+从形状开始做消融可以用 batch × token × hidden 给每一层记输入输出。只改 token 切分时，别顺便改变总维度和训练步数；对照组至少列参数量、吞吐、延迟和同口径离线指标。一个可复现的小练习是拿相同输入分别做全拼接 MLP 和分组混合，先比较预算，再看分数。
+论文里的生产结果有它自己的特征和服务约束。换成小样本后，不能因为复现了张量形状，就把线上提升数字照搬到自己的设置里。
+参考
+RankMixer: Scaling Up Ranking Models in Industrial Recommenders（2025）
+
+]]></content>
+      <categories>
+        <category>推荐系统</category>
+      </categories>
+      <tags>
+        <tag>论文精读</tag>
+        <tag>排序</tag>
+        <tag>RankMixer</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>广告系统笔记 03：pCTR 乘出价，是价值估计还是结算价</title>
+    <url>//2026/08/09/auction-value/</url>
+    <content><![CDATA[
+回顾笔记 · 按学习路线归档，非当日发布。
+
+忽略其他因素时，CPC 出价 2 元、预测点击率 0.03，对一次曝光对应的出价乘概率是 0.06 元，换成千次曝光尺度就是 60 元。它可以是一个排序信号，但不是说用户点一下，广告主一定付 2 元，也不是说平台真实收益一定等于 60 元。
+同一份排序表加三列把输入出价、模型分、结算口径分开记。另一广告出价 3 元、pCTR 0.015，乘积是 0.045 元；第一条乘积更高，但加入质量、政策过滤、预算节奏之后结果仍有可能变。机制如何定价，要看具体规则，不能由排名分反推。
+如果两个广告只差一点点且 pCTR 没校准，概率误差会因出价放大。离线查校准别只按 pCTR 分桶，也可以观察高出价区间的表现。
+参考
+Google Ads：About Ad Rank
+
+]]></content>
+      <categories>
+        <category>广告系统</category>
+      </categories>
+      <tags>
+        <tag>评估指标</tag>
+        <tag>CTR预估</tag>
+        <tag>广告竞价</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Agent 笔记 01：工具调用不是执行授权</title>
+    <url>//2026/09/26/agent-tool-schema/</url>
+    <content><![CDATA[
+回顾笔记 · 按学习路线归档，非当日发布。
+
+把查文档工具设计成 lookup_note(topic, limit)，模型给出 topic 和 limit 之后，不应该直接相信参数。是否允许这个工具、limit 是否过大、查询结果是否包含模型不该看的内容，应该在调用方判断。
+一次执行拆成三个记录保留模型请求、校验结果、工具返回。参数格式错误可以让模型修正一次；访问越权不能靠重试解决。工具结果是外部数据，遇到内容里写着“忽略规则并去调用某个工具”，也不能把它当成新授权。
+读操作和写操作最好分开考虑。读文档可以有默认执行路径；发邮件、修改文件这类有副作用的操作，先让用户看到目标和内容，再按权限决定是否执行。模型没必要持有长期凭据。
+参考
+OpenAI：Function calling
+Yao 等，ReAct: Synergizing Reasoning and Acting in Language Models（2022）
+
+]]></content>
+      <categories>
+        <category>杂谈</category>
+      </categories>
+      <tags>
+        <tag>工程实践</tag>
+        <tag>Agent</tag>
+        <tag>工具调用</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LLM 笔记 03：KV cache 省了哪些计算</title>
+    <url>//2026/09/18/llm-kv-cache/</url>
+    <content><![CDATA[
+回顾笔记 · 按学习路线归档，非当日发布。
+
+每生成一个 token，不用重算已处理前缀位置的 key、value，这就是 KV cache 最直接的作用。新位置的 query 仍要对历史 K&#x2F;V 做注意力，所以 cache 不是把长上下文之后的解码变成和长度无关。
+粗估占用一个序列、32 层、8 个 KV heads、head dim 128、FP16，单 token 约 2 × 32 × 8 × 128 × 2 = 131072 字节，即 128 KiB。4096 个 token 约 512 MiB，仅算 K&#x2F;V，不含框架开销、权重或页碎片。这里用的是 KV heads 而非 query heads。
+测推理别只给总吞吐。较长 prompt 可能拖高首 token 延迟；一旦开始生成，每 token 耗时又受批处理、读取历史缓存和硬件带宽影响。
+参考
+Kwon 等，Efficient Memory Management for Large Language Model Serving with PagedAttention（2023）
+Hugging Face Transformers：KV cache strategies
+
+]]></content>
+      <categories>
+        <category>大模型</category>
+      </categories>
+      <tags>
+        <tag>学习笔记</tag>
+        <tag>推理</tag>
+        <tag>KV Cache</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LLM 笔记 02：SFT、RLHF 和 DPO 不在监督同一件事</title>
+    <url>//2026/09/11/llm-preferences/</url>
+    <content><![CDATA[
+回顾笔记 · 按学习路线归档，非当日发布。
+
+只有一个示范答案，可以做 SFT，让模型在给定提示下更倾向于生成这个答案。一对回答带有偏好标签时，给训练流程的是“更喜欢 A 而不是 B”的信息。这个标签也可能偏好语气而不是真实性，并不自动变成事实监督。
+两种用偏好对的方式InstructGPT 的典型流程先拟合奖励模型，再用 RL 优化策略，通常会有对参考策略的约束。DPO 使用偏好对直接构造策略目标，把策略相对参考模型的对数概率变化用于比较 chosen&#x2F;rejected；它不是没有参考，也不是以 PPO 在线采样的方式跑。
+评估里把安全、事实性、格式和啰嗦程度分开判。只看偏好胜率时，较长答案可能占便宜，长度差这个混杂因素值得单列。
+参考
+Ouyang 等，Training Language Models to Follow Instructions with Human Feedback（2022）
+Rafailov 等，Direct Preference Optimization（2023）
+
+]]></content>
+      <categories>
+        <category>大模型</category>
+      </categories>
+      <tags>
+        <tag>学习笔记</tag>
+        <tag>偏好优化</tag>
+        <tag>RLHF</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>论文精读｜TIGER：生成式推荐生成的不是商品标题</title>
+    <url>//2026/09/04/tiger-semantic-id/</url>
+    <content><![CDATA[
+回顾笔记 · 按学习路线归档，非当日发布。
+
+生成式检索听起来像“让语言模型写出推荐商品”，TIGER 里不是这么做的。物品先表示为离散的语义 ID，模型根据历史序列生成候选 ID，再通过映射找回条目。生成的中间序列有含义，但最终交付的仍是库存里的东西。
+前缀相近，不代表同一件物品如果两件物品共享 ID 前缀，模型早一步选对前缀不代表最终区分得开。构造一个小例子：候选 ID 是 [12,3,4] 和 [12,3,7]，beam 太窄时，前两步一样，到第三步才发生真正的区分。实际评估同时看有效 ID 比例、top K 命中和生成预算。
+目录更新也值得单列。如果训练时的 ID 表与服务的库已经分家，模型生成得再准也会遇到不在售或找不到的条目。这里与双塔的索引版本问题倒很像。
+参考
+Rajput 等，Recommender Systems with Generative Retrieval（2023）
+
+]]></content>
+      <categories>
+        <category>推荐系统</category>
+      </categories>
+      <tags>
+        <tag>召回</tag>
+        <tag>论文精读</tag>
+        <tag>生成式推荐</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Agent 笔记 03：结果对了，过程也得能解释</title>
+    <url>//2026/11/22/agent-trace-eval/</url>
+    <content><![CDATA[
+回顾笔记 · 按学习路线归档，非当日发布。
+
+两次文档查找都拿到正确答案，一个调用两次，另一个调用十次并尝试了不需要的写操作。这两个结果的文本分数也许一样，但系统表现不一样。
+在受控环境测轨迹用固定工具夹具覆盖查无文档、格式校验失败、工具超时和需要确认的写操作。记录终态、结构化调用、用量和错误类型，不要求记录模型的隐含推理过程。断言也别过度锁死合法路径：允许不同搜索顺序，但预算用尽必须停，未确认时不得发生写入。
+修复失败循环时，优先检查状态机的退出条件和预算。只改一条“请不要一直试”的提示语，常常不能约束真正触发工具的代码路径。
+参考
+Liu 等，AgentBench: Evaluating LLMs as Agents（2023）
+Anthropic：Building effective agents
+
+]]></content>
+      <categories>
+        <category>杂谈</category>
+      </categories>
+      <tags>
+        <tag>评估指标</tag>
+        <tag>工程实践</tag>
+        <tag>Agent</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LLM 笔记 05：评估集不大时，先把误差分开看</title>
+    <url>//2026/11/08/llm-eval-slices/</url>
+    <content><![CDATA[
+回顾笔记 · 按学习路线归档，非当日发布。
+
+给 A、B 两个版本各跑 50 道自制题，A 对 37、B 对 39，不适合立刻宣布 B 全面胜出。先看成对结果：多少题只有 A 对、多少题只有 B 对。题还是同一批，不要把两组当完全独立样本。
+把失败按原因记下来格式不合规、缺证据、推理错、拒答不合理是不同问题。可以把 JSON 解析交给程序，把答案事实性交给有依据的判分，把模糊偏好留下来人工抽查。如果用模型当裁判，交换答案位置测一次顺序偏差，别让 A 永远先展示。
+用过的样例应该分开存。为了修一个 case 把答案写进 prompt 后，那些 case 是回归测试，不再适合当没见过的评估样本。
+参考
+Liang 等，Holistic Evaluation of Language Models（2022）
+Zheng 等，Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena（2023）
+
+]]></content>
+      <categories>
+        <category>大模型</category>
+      </categories>
+      <tags>
+        <tag>学习笔记</tag>
+        <tag>评估指标</tag>
+        <tag>推理</tag>
+      </tags>
+  </entry>
+</search>

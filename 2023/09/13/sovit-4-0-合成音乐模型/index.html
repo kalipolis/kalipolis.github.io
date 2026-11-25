@@ -1,438 +1,285 @@
 <!DOCTYPE html>
-<html 
-	lang="zh-CN">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		
-<link rel="stylesheet" href="/css/layout.css">
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
 
-		
-		<title> sovit-4.0 合成音乐模型 -  kalipolis的个人网站</title>
-		<link rel="stylesheet" href="https://unpkg.com/mdui@1.0.2/dist/css/mdui.min.css" />
-		<script src="https://unpkg.com/mdui@1.0.2/dist/js/mdui.min.js"></script>
-		<!-- lazyload -->
-		<script src="https://unpkg.com/lazysizes@5.1.0/lazysizes.min.js"></script>
-		<!-- smooth-scrolling -->
-		<script src="https://unpkg.com/smooth-scrolling.js@1.0.0"></script>
-		<!-- highlight -->
-		<link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.6.0/styles/atom-one-dark.min.css" />
-		<script src="//unpkg.com/@highlightjs/cdn-assets@11.6.0/highlight.min.js"></script>
-		<!-- 预置 kiraicon -->
-		
-<link rel="stylesheet" href="/lib/iconfont/iconfont.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/mark.svg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/mark.svg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-		
-		<link
-			rel="shortcut icon"
-			href="/favicon.png"
-			type="image/png"
-		/>
-		
-<link rel="stylesheet" href="/deps/css/APlayer.min.css">
+<link rel="stylesheet" href="/css/main.css">
 
-		
-			
-				
-<link rel="stylesheet" href="/style.css">
 
-			
-				
-<link rel="stylesheet" href="/custom.css">
 
-			
-		
-		
-<script src="/deps/js/APlayer.min.js"></script>
-<script src="/deps/js/Meting.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css" integrity="sha256-4Lad8m4ZWW1Lgb9+sMVLYEfnIh7BjV1NQMEe79Pviks=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-	<meta name="generator" content="Hexo 6.3.0"><link rel="stylesheet" href="\assets\css\APlayer.min.css" class="aplayer-style-marker">
-<script src="\assets\js\APlayer.min.js" class="aplayer-script-marker"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kalipolis.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.29.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"always","padding":16,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":2,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="So-vits-svc（也称Sovits）是由是中国民间歌声合成爱好者Rcell基于VITS、soft-vc、VISinger2等一系列项目开发的一款开源免费AI语音转换软件，通过SoftVC内容编码器提取源音频语音特征，与F0同时输入VITS替换原本的文本输">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sovit-4.0 合成音乐模型">
+<meta property="og:url" content="https://kalipolis.github.io/2023/09/13/sovit-4-0-%E5%90%88%E6%88%90%E9%9F%B3%E4%B9%90%E6%A8%A1%E5%9E%8B/">
+<meta property="og:site_name" content="tjh&#39;s Blog">
+<meta property="og:description" content="So-vits-svc（也称Sovits）是由是中国民间歌声合成爱好者Rcell基于VITS、soft-vc、VISinger2等一系列项目开发的一款开源免费AI语音转换软件，通过SoftVC内容编码器提取源音频语音特征，与F0同时输入VITS替换原本的文本输">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kalipolis.github.io/img/Megumin&Emilia.png">
+<meta property="article:published_time" content="2023-09-13T04:00:00.000Z">
+<meta property="article:modified_time" content="2026-11-25T11:44:36.995Z">
+<meta property="article:author" content="kalipolis">
+<meta property="article:tag" content="blog">
+<meta property="article:tag" content="sovit">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kalipolis.github.io/img/Megumin&Emilia.png">
+
+
+<link rel="canonical" href="https://kalipolis.github.io/2023/09/13/sovit-4-0-%E5%90%88%E6%88%90%E9%9F%B3%E4%B9%90%E6%A8%A1%E5%9E%8B/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":"","permalink":"https://kalipolis.github.io/2023/09/13/sovit-4-0-%E5%90%88%E6%88%90%E9%9F%B3%E4%B9%90%E6%A8%A1%E5%9E%8B/","path":"/2023/09/13/sovit-4-0-合成音乐模型/","title":"sovit-4.0 合成音乐模型"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>sovit-4.0 合成音乐模型 | tjh's Blog</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 </head>
 
-	<body>
-		<div
-			class="kira-background"
-			style="background-image: url('/tagagison.jpg')"
-		></div>
-		<div class="kira-header">
-    <a
-        class="kira-drawer-button mdui-ripple"
-        title="导航栏"
-        onclick="document.querySelector('.kira-sidebar-modal').classList.add('show');document.querySelector('.kira-sidebar#sidebar').classList.add('show');"
-    >
-        <i class="kirafont icon-menu"></i>
-    </a>
-    <a href="/" title="kalipolis的个人网站">
-        <img
-			src="/favicon.jpg"
-			alt="kalipolis"
-		/>
-    </a>
-</div>
-		<div class="kira-body">
-			<div class="kira-sidebar" id="sidebar">
-	<div class="kira-avatar mdui-ripple">
-		<a href="/favicon.jpg" title="kalipolis">
-			<img
-				src="/favicon.jpg"
-				alt="kalipolis"
-			/>
-		</a>
-	</div>
-	<div class="kira-count">
-		<div><span>文章</span>8</div>
-		<div><span>标签</span>7</div>
-		<div><span>分类</span>5</div>
-	</div>
-	<div class="kira-list">
-		
-		<a
-			class="kira-list-item mdui-ripple false"
-			href="/"
-			title="回到首页"
-		>
-			<i
-				class="kirafont
-					
-						icon-home
-					"
-			></i>
-			<div class="kira-list-item-content">
-				回到首页
-			</div>
-		</a>
-		
-		<a
-			class="kira-list-item mdui-ripple false"
-			href="/about.html"
-			title="关于本人"
-		>
-			<i
-				class="kirafont
-					
-						icon-user
-					"
-			></i>
-			<div class="kira-list-item-content">
-				关于本人
-			</div>
-		</a>
-		
-		<a
-			class="kira-list-item mdui-ripple false"
-			href="/archive.html"
-			title="文章分类"
-		>
-			<i
-				class="kirafont
-					
-						icon-container
-					"
-			></i>
-			<div class="kira-list-item-content">
-				文章分类
-			</div>
-		</a>
-		
-		<a
-			class="kira-list-item mdui-ripple false"
-			href="/friends.html"
-			title="朋友的个人网站"
-		>
-			<i
-				class="kirafont
-					
-						icon-team
-					"
-			></i>
-			<div class="kira-list-item-content">
-				朋友的个人网站
-			</div>
-		</a>
-		
-	</div>
-	<aside id="kira-sidebar">
-		
-			<div class="kira-widget-wrap">
-	<div class="kira-widget kira-social">
-		
-			<a
-				class="mdui-ripple"
-				href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=1753573997&website=www.oicqzone.com"
-				target="_blank"
-				mdui-tooltip="{content: 'QQ'}"
-				style="color: rgb(49, 174, 255); background-color: rgba(49, 174, 255, .1);"
-			>
-				<i
-					class="kirafont
-					
-						icon-QQ
-					"
-				></i>
-			</a>
-		
-			<a
-				class="mdui-ripple"
-				href="https://space.bilibili.com/384132756"
-				target="_blank"
-				mdui-tooltip="{content: '哔哩哔哩'}"
-				style="color: rgb(231, 106, 141); background-color: rgba(231, 106, 141, .15);"
-			>
-				<i
-					class="kirafont
-					
-						icon-bilibili
-					"
-				></i>
-			</a>
-		
-			<a
-				class="mdui-ripple"
-				href="https://github.com/kalipolis/"
-				target="_blank"
-				mdui-tooltip="{content: 'GitHub'}"
-				style="color: rgb(25, 23, 23); background-color: rgba(25, 23, 23, .15);"
-			>
-				<i
-					class="kirafont
-					
-						icon-github
-					"
-				></i>
-			</a>
-		
-			<a
-				class="mdui-ripple"
-				href="https://gitee.com/kalipolis/"
-				target="_blank"
-				mdui-tooltip="{content: 'Gitee'}"
-				style="color: rgb(165, 15, 15); background-color: rgba(165, 15, 15, .15);"
-			>
-				<i
-					class="kirafont
-					
-						icon-gitee
-					"
-				></i>
-			</a>
-		
-			<a
-				class="mdui-ripple"
-				href="https://u.wechat.com/MDjDEs1RHxljlFE9Yyo46wQ"
-				target="_blank"
-				mdui-tooltip="{content: '微信'}"
-				style="color: rgb(0, 255, 0); background-color: rgba(0, 255, 0, .15);"
-			>
-				<i
-					class="kirafont
-					
-						kirafont-weixin
-					"
-				></i>
-			</a>
-		
-			<a
-				class="mdui-ripple"
-				href="https://steamcommunity.com/profiles/76561199017311944/"
-				target="_blank"
-				mdui-tooltip="{content: 'steam'}"
-				style="color: rgb(0, 0, 255); background-color: rgba(0, 0, 255, .15);"
-			>
-				<i
-					class="kirafont
-					
-						kirafont-steam
-					"
-				></i>
-			</a>
-		
-			<a
-				class="mdui-ripple"
-				href="https://music.163.com/#/user/home?id=1655485859"
-				target="_blank"
-				mdui-tooltip="{content: '网易云音乐'}"
-				style="color: rgb(255, 0, 0); background-color: rgba(255, 0, 0, .15);"
-			>
-				<i
-					class="kirafont
-					
-						kirafont-wangyiyunyinleclick
-					"
-				></i>
-			</a>
-		
-			<a
-				class="mdui-ripple"
-				href="https://bgm.tv/user/716422"
-				target="_blank"
-				mdui-tooltip="{content: 'bangumi'}"
-				style="color: rgb(255, 192, 203); background-color: rgba(255, 192, 203, .15);"
-			>
-				<i
-					class="kirafont
-					
-						kirafont-bangumi
-					"
-				></i>
-			</a>
-		
-	</div>
-</div>
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
-		
-			
-  <div class="kira-widget-wrap">
-    <h3 class="kira-widget-title">分类</h3>
-    <div class="kira-widget">
-      <ul class="category-list">
-        
-        
-
-        
-          <li class="category-list-item">
-            <a class="category-list-link" href="/categories/关于本项目/">
-              关于本项目
-            </a>
-            <span class="category-list-count">1</span>
-          </li>
-        
-          <li class="category-list-item">
-            <a class="category-list-link" href="/categories/分享/">
-              分享
-            </a>
-            <span class="category-list-count">1</span>
-          </li>
-        
-          <li class="category-list-item">
-            <a class="category-list-link" href="/categories/技术/">
-              技术
-            </a>
-            <span class="category-list-count">4</span>
-          </li>
-        
-          <li class="category-list-item">
-            <a class="category-list-link" href="/categories/整活/">
-              整活
-            </a>
-            <span class="category-list-count">1</span>
-          </li>
-        
-          <li class="category-list-item">
-            <a class="category-list-link" href="/categories/番剧/">
-              番剧
-            </a>
-            <span class="category-list-count">1</span>
-          </li>
-        
-      </ul>
-    </div>
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-search popup-trigger" aria-label="搜索" role="button">
+      <i class="fa fa-search fa-fw fa-lg"></i>
   </div>
 
-		
-			
-	<div class="kira-widget-wrap">
-		<div id="randomtagcloud" class="kira-widget tagcloud kira-rainbow">
-			<a href="/tags/blog/" style="font-size: 20px;">blog</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/c/" style="font-size: 10px;">c++</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/sovit/" style="font-size: 10px;">sovit</a>
-		</div>
-		
-	</div>
+  <div class="site-meta">
 
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">tjh's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">搜广推学习笔记</p>
+  </div>
 
-		
-	</aside>
-	<div class="kira-copyright">
-		&copy; 2024
-		<a href="/">kalipolis</a>
-		Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> &
-		<a href="https://github.com/ch1ny/kira-hexo/" target="_blank">Kira-Hexo</a>
-		<br />
-		
-		
-	</div>
+  <div class="site-nav-toggle" aria-label="切换导航栏" role="button">
+      <i class="fa fa-ellipsis fa-fw fa-lg"></i>
+  </div>
 </div>
-<div
-	class="kira-sidebar-modal"
-	id="sidebar-modal"
-	onclick="(function(self) {
-		self.classList.remove('show');
-		document.querySelector('.kira-sidebar.show#sidebar').classList.remove('show');
-	})(this)"
-></div>
-			<div class="kira-content">
-				<div id="kira-top-header"></div>
-				<div class="kira-main-content">
-					
-<link rel="stylesheet" href="/css/kira-image.css">
 
 
-<script src="/js/kira-image.js"></script>
 
-<div class="kira-image">
-    <div class="kira-image-modal">
-        <div class="kira-image-header">
-            <div class="kira-image-counter"></div>
-            <div class="kira-image-title"></div>
-            <div class="kira-image-operation">
-                <div class="kira-image-operation-button" id="kira-image-operation-button-zoom">
-                    <i class="kirafont icon-zoom-in"></i>
-                </div>
-                <div class="kira-image-operation-button" id="kira-image-operation-button-close">
-                    <i class="kirafont icon-close"></i>
-                </div>
-            </div>
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  
+  <template id="search-popup-template"><div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
         </div>
-        <div class="kira-image-container">
-            <div class="kira-image-prev-button-panel">
-                <div class="kira-image-exchange-button">
-                    <i class="kirafont icon-left"></i>
-                </div>
-            </div>
-            <div class="kira-image-list">
-                <div class="kira-image-prev">
-                    <img />
-                </div>
-                <div class="kira-image-now">
-                    <img />
-                </div>
-                <div class="kira-image-next">
-                    <img />
-                </div>
-            </div>
-            <div class="kira-image-next-button-panel">
-                <div class="kira-image-exchange-button">
-                    <i class="kirafont icon-right"></i>
-                </div>
-            </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
         </div>
+      </div>
     </div>
+  </div></template>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Sovits%E6%A8%A1%E5%9E%8B%E4%BB%8B%E7%BB%8D"><span class="nav-text">Sovits模型介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%E8%A7%86%E9%A2%91%E4%B8%AD%E5%B7%B2%E7%BB%8F%E5%86%99%E7%9A%84%E5%BE%88%E6%B8%85%E6%A5%9A%E4%BA%86%EF%BC%8C%E8%BF%99%E9%87%8C%E8%AE%B2%E4%B8%80%E4%B8%8B%E6%88%91%E4%BD%BF%E7%94%A8%E6%AD%A4%E6%A8%A1%E5%9E%8B%E7%9A%84%E7%BB%8F%E9%AA%8C%EF%BC%9A"><span class="nav-text">具体使用方法视频中已经写的很清楚了，这里讲一下我使用此模型的经验：</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="kalipolis"
+      src="/images/mark.svg">
+  <p class="site-author-name" itemprop="name">kalipolis</p>
+  <div class="site-description" itemprop="description">关于推荐、搜索、广告和大模型的学习笔记。</div>
 </div>
-<div class="kira-post">
-	<article>
-		
-		<div class="kira-post-cover">
-			<img
-				data-src="/img/Megumin&Emilia.png"
-				data-sizes="auto"
-				alt="sovit-4.0 合成音乐模型"
-				class="lazyload kira-post-cover-image disabled-kira-image"
-			/>
-			<h1>sovit-4.0 合成音乐模型</h1>
-		</div>
-		
-		<div class="kira-post-meta kira-rainbow" style="margin:10px 0!important;">
-			<a><i class="kirafont icon-calendar-fill"></i>2023年09月13日</a>
-			<a><i class="kirafont icon-edit-fill"></i>658 字</a>
-			<a><i class="kirafont icon-time-circle-fill"></i>大概 2 分钟</a>
-		</div>
-		<h1><span id="sovits模型介绍">Sovits模型介绍</span></h1><ul>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/kalipolis" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;kalipolis" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kalipolis.github.io/2023/09/13/sovit-4-0-%E5%90%88%E6%88%90%E9%9F%B3%E4%B9%90%E6%A8%A1%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/mark.svg">
+      <meta itemprop="name" content="kalipolis">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tjh's Blog">
+      <meta itemprop="description" content="关于推荐、搜索、广告和大模型的学习笔记。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="sovit-4.0 合成音乐模型 | tjh's Blog">
+      <meta itemprop="description" content="So-vits-svc（也称Sovits）是由是中国民间歌声合成爱好者Rcell基于VITS、soft-vc、VISinger2等一系列项目开发的一款开源免费AI语音转换软件，通过SoftVC内容编码器提取源音频语音特征，与F0同时输入VITS替换原本的文本输">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          sovit-4.0 合成音乐模型
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-09-13 12:00:00" itemprop="dateCreated datePublished" datetime="2023-09-13T12:00:00+08:00">2023-09-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-11-25 19:44:36" itemprop="dateModified" datetime="2026-11-25T19:44:36+08:00">2026-11-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B4%E6%B4%BB/" itemprop="url" rel="index"><span itemprop="name">整活</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">So-vits-svc（也称Sovits）是由是中国民间歌声合成爱好者Rcell基于VITS、soft-vc、VISinger2等一系列项目开发的一款开源免费AI语音转换软件，通过SoftVC内容编码器提取源音频语音特征，与F0同时输入VITS替换原本的文本输</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="/img/Megumin&Emilia.png"></p>
+<h1 id="Sovits模型介绍"><a href="#Sovits模型介绍" class="headerlink" title="Sovits模型介绍"></a>Sovits模型介绍</h1><ul>
 <li>So-vits-svc（也称Sovits）是由是中国民间歌声合成爱好者Rcell基于VITS、soft-vc、VISinger2等一系列项目开发的一款开源免费AI语音转换软件，通过SoftVC内容编码器提取源音频语音特征，与F0同时输入VITS替换原本的文本输入达到歌声转换的效果</li>
 <li>介绍视频（关注这个up谢谢喵😋）：</li>
 </ul>
-<iframe src="https://player.bilibili.com/player.html?bvid=BV1H24y187Ko&page=1&as_wide=1&high_quality=1&danmaku=0" style="width: 62em; height: 35em;" allowfullscreen="allowfullscreen" width="100%" height="100%" scrolling="no" frameborder="0" sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"></iframe>
+<iframe allowfullscreen="allowfullscreen" frameborder="0" loading="lazy" sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts" scrolling="no" src="https://player.bilibili.com/player.html?bvid=BV1H24y187Ko&amp;page=1&amp;as_wide=1&amp;high_quality=1&amp;danmaku=0"></iframe>
 
-<h5><span id="具体使用方法视频中已经写的很清楚了这里讲一下我使用此模型的经验">具体使用方法视频中已经写的很清楚了，这里讲一下我使用此模型的经验：</span></h5><ol>
+<h5 id="具体使用方法视频中已经写的很清楚了，这里讲一下我使用此模型的经验："><a href="#具体使用方法视频中已经写的很清楚了，这里讲一下我使用此模型的经验：" class="headerlink" title="具体使用方法视频中已经写的很清楚了，这里讲一下我使用此模型的经验："></a>具体使用方法视频中已经写的很清楚了，这里讲一下我使用此模型的经验：</h5><ol>
 <li>训练集起码需要20分钟才能有相对比较好的效果</li>
 <li>参数中可以调整每多少个epoch输出一次模型，如果你的数据集过小，请把输出的epoch数也改小（比如调成200），防止过拟合</li>
 <li>这个模型跑的真的很慢，并且很耗算力，碰到迟迟不输出不要着急，等一会再看看有没有输出结果</li>
@@ -440,129 +287,89 @@
 <li>最好部署在云端跑项目，现行电脑跑这个模型是比较吃力的</li>
 </ol>
 <ul>
-<li>大家可以用这个网站体验一下Sovits模型的效果：<a target="_blank" rel="noopener" href="https://huggingface.co/spaces/zomehwh/sovits-teio">网站链接</a>，传入20s内的音频，可以转成网站内置的角色音色<del>不要问为什么都是赛马娘角色</del></li>
+<li>大家可以用这个网站体验一下Sovits模型的效果：<a href="https://huggingface.co/spaces/zomehwh/sovits-teio">网站链接</a>，传入20s内的音频，可以转成网站内置的角色音色<del>不要问为什么都是赛马娘角色</del></li>
 <li>我利用这个模型训练了一个高桥李依的音色，训练集1小时，800epoch</li>
 </ul>
-
-        <div id="aplayer-FFfxEAkN" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
-            <pre class="aplayer-lrc-content"></pre>
-        </div>
-        <script>
-          var ap = new APlayer({
-            element: document.getElementById("aplayer-FFfxEAkN"),
-            narrow: false,
-            autoplay: false,
-            showlrc: false,
-            music: {
-              title: "可愛くてごめん—高桥李依",
-              author: "kalipolis",
-              url: "可愛くてごめん—高桥李依.mp3",
-              pic: "",
-              lrc: ""
-            }
-          });
-          window.aplayers || (window.aplayers = []);
-          window.aplayers.push(ap);
-        </script>
-
+<p><audio controls="" preload="none" src="/2023/09/13/sovit-4-0-%E5%90%88%E6%88%90%E9%9F%B3%E4%B9%90%E6%A8%A1%E5%9E%8B/%E5%8F%AF%E6%84%9B%E3%81%8F%E3%81%A6%E3%81%94%E3%82%81%E3%82%93%E2%80%94%E9%AB%98%E6%A1%A5%E6%9D%8E%E4%BE%9D.mp3"></audio></p>
 <ul>
 <li>可以听出很明显的李依李个人音色，但是训练效果算不上好，主要是当时模型刚刚出来，没有均值滤波等功能，容易出现气声，加上我epoch确实跑的太少了，后续羽毛布团大佬经过改进，我们已经可以完成不错的声音训练了</li>
 <li>我使用一个同学的几段录音文稿，数据集7分钟左右，训练了200epoch的模型，并套在春物主题曲上，使用au和原声合成<del>这位同学很满意</del></li>
 </ul>
-
-        <div id="aplayer-HqPTxILs" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
-            <pre class="aplayer-lrc-content"></pre>
-        </div>
-        <script>
-          var ap = new APlayer({
-            element: document.getElementById("aplayer-HqPTxILs"),
-            narrow: false,
-            autoplay: false,
-            showlrc: false,
-            music: {
-              title: "ユキトキ",
-              author: "kalipolis",
-              url: "ユキトキ.mp3",
-              pic: "",
-              lrc: ""
-            }
-          });
-          window.aplayers || (window.aplayers = []);
-          window.aplayers.push(ap);
-        </script>
-
+<p><audio controls="" preload="none" src="/2023/09/13/sovit-4-0-%E5%90%88%E6%88%90%E9%9F%B3%E4%B9%90%E6%A8%A1%E5%9E%8B/%E3%83%A6%E3%82%AD%E3%83%88%E3%82%AD.mp3"></audio></p>
 <ul>
 <li>在数据集较小的情况下，不要训练太多次数，7~8轮已经很够了，不然你会听到大量的电音<del>中国有嘻哈</del></li>
 </ul>
+<blockquote>
+<p>原文作者：kalipolis。许可：<a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh">CC BY-NC-SA 3.0 CN</a>。</p>
+</blockquote>
 
-	</article>
-
-	 
-    <div class="kira-post-copyright">
-        <strong>本文作者：</strong>kalipolis<br>
-        <strong>本文链接：</strong><a href="https://kalipolis.gitee.io/2023/09/13/sovit-4-0-%E5%90%88%E6%88%90%E9%9F%B3%E4%B9%90%E6%A8%A1%E5%9E%8B/" title="https:&#x2F;&#x2F;kalipolis.gitee.io&#x2F;2023&#x2F;09&#x2F;13&#x2F;sovit-4-0-合成音乐模型&#x2F;" target="_blank" rel="noopener">https:&#x2F;&#x2F;kalipolis.gitee.io&#x2F;2023&#x2F;09&#x2F;13&#x2F;sovit-4-0-合成音乐模型&#x2F;</a><br>
-        
-            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
-        
     </div>
 
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/blog/" rel="tag"># blog</a>
+              <a href="/tags/sovit/" rel="tag"># sovit</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/09/13/%E4%B8%AA%E4%BA%BA%E7%95%AA%E5%89%A7tier-list-top10/" rel="prev" title="个人番剧tier list top10">
+                  <i class="fa fa-angle-left"></i> 个人番剧tier list top10
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/09/13/my-first-blog/" rel="next" title="关于这个个人博客">
+                  关于这个个人博客 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2023 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">kalipolis</span>
+  </div>
+
+    </div>
+  </footer>
+
   
-	<div class="kira-post-nav">
-		<nav class="post-nav">
-			          
-			<!-- 先找到与当前文字相同的目录 -->
-			   
-			<!-- 在找到当前文章所在的 index -->
-			                  
-		</nav>
-	</div>
-	
-	<div class="kira-post-meta kira-rainbow">
-		
-			<a class="kirafont icon-container-fill -link" href="/categories/%E6%95%B4%E6%B4%BB/">整活</a>
-		
-		
-			<a class="kirafont icon-tag-fill -none-link" href="/tags/blog/" rel="tag">blog</a> <a class="kirafont icon-tag-fill -none-link" href="/tags/sovit/" rel="tag">sovit</a>
-		
-	</div>
-	
-		<script src="/js/kira-code-copy.js"></script>
-	
-	
-	<div class="kira-post-footer">
-		
-	<link rel="stylesheet" href="https://unpkg.com/gitalk@latest/dist/gitalk.css" />
-	<div id="gitalk"></div>
-	<script src="https://unpkg.com/gitalk@latest/dist/gitalk.min.js"></script>
-	<script type="text/javascript">
-		const gitalk = new Gitalk({
-			clientID: 'fe6ad234dade01651331',
-			clientSecret: '67f1bf087d214445756a9e87caf90299a20dee37',
-			id: 'sovit-4.0 合成音乐模型',
-			repo: 'comment-for-blog',
-			owner: 'kalipolis',
-			admin: 'kalipolis',
-			title: 'comment-for-blog',
-		});
-		gitalk.render('gitalk');
-	</script>
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
 
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
 
-		
-	</div>
-	
-</div>
-
-				</div>
-			</div>
-			<div class="kira-right-column">
-	<a onclick="document.querySelector('#kira-top-header').scrollIntoView({behavior: 'smooth'});" class="kira-backtotop" aria-label="回到顶部" title="回到顶部">
-		<button class="mdui-fab mdui-ripple">
-			<i class="kirafont icon-caret-up"></i>
-		</button>
-	</a>
-</div>
-
-		</div>
-	<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"superSample":2,"width":150,"height":300,"position":"right","hOffset":0,"vOffset":-20},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2},"log":false});</script></body>
+</body>
 </html>
